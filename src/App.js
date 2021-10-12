@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Perfil from "./components/MicroPerfil/Perfil";
+import ProfileGrid from "./components/MicroPerfil/ProfileGrid";
+import TagFilter from "./components/Tagfilter/TagFilter";
+
+const ProfileList = [
+  {
+    tumnail: "/img/asd.jpg",
+    age: "34",
+    name: "Tom Cruise",
+  },
+  {
+    tumnail: "/img/KR.jpg",
+    age: "45",
+    name: "Keanu reeves",
+  },
+  {
+    tumnail: "/img/CHTH.jpg",
+    age: "35",
+    name: "charlize theron",
+  },
+];
+
+const tags=["caucasico","pelo corto","rubio","hombre","mujer","blanco","moreno"]
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <TagFilter data={tags} />
+      <ProfileGrid data={ProfileList} />
+    </>
   );
 }
 
