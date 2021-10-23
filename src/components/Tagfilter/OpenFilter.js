@@ -23,7 +23,6 @@ export const OpenFilter = (data) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = useState(false);
-
   return (
     <>
       <Button

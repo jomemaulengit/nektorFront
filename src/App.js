@@ -1,5 +1,8 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import ProfileGrid from "./components/MicroPerfil/ProfileGrid";
+import { getTags } from "./redux/tagState";
+
 
 const ProfileList = [
   {
@@ -55,6 +58,8 @@ const ProfileList = [
 ];
 
 function App() {
+  const dispatch = useDispatch();
+  dispatch(getTags());
   return (
     <>
       <br />

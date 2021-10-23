@@ -28,9 +28,11 @@ export const getTags = () => (dispatch, getState) => {
     .then((res) => {
       dispatch({
         type: GET_TAGS,
-        payload: res.data.itemList,
+        payload: res.data.itemList.map((item) => ({
+          tag: item.tag,
+          isActive: item.isActive,
+        })),
       });
-      console.log("lol");
     })
     .catch((err) => console.log(err));
 };

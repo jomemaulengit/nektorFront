@@ -2,9 +2,7 @@ import Perfil from "./Perfil";
 import { Grid } from "@material-ui/core";
 import styled from "styled-components";
 import { OpenFilter } from "../Tagfilter/OpenFilter";
-import { UseGet } from "../../hooks/useGet";
-import { useDispatch, getState, useSelector } from "react-redux";
-import { getTags } from "../../redux/tagState";
+import { useSelector } from "react-redux";
 
 const Div = styled.div`
   margin-left: 15vw;
@@ -13,9 +11,9 @@ const Div = styled.div`
 `;
 
 const ProfileGrid = (data) => {
-  const dispatch = useDispatch();
-  dispatch(getTags());
-  const labels = UseGet();
+  const labels = useSelector((state) => state.tags.array);
+  console.log(labels);
+
   return (
     <Div>
       <OpenFilter data={labels} />
