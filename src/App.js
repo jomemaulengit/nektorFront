@@ -1,9 +1,12 @@
 import React from "react";
-import Perfil from "./components/MicroPerfil/Perfil";
 import ProfileGrid from "./components/MicroPerfil/ProfileGrid";
-import TagFilter from "./components/Tagfilter/TagFilter";
 
 const ProfileList = [
+  {
+    tumnail: "/img/asd.jpg",
+    age: "34",
+    name: "Tom Cruise",
+  },
   {
     tumnail: "/img/asd.jpg",
     age: "34",
@@ -15,18 +18,46 @@ const ProfileList = [
     name: "Keanu reeves",
   },
   {
+    tumnail: "/img/KR.jpg",
+    age: "45",
+    name: "Keanu reeves",
+  },
+  {
     tumnail: "/img/CHTH.jpg",
     age: "35",
     name: "charlize theron",
   },
+  {
+    tumnail: "/img/CHTH.jpg",
+    age: "35",
+    name: "charlize theron",
+  },
+  {
+    tumnail: "/img/CLCL.jpg",
+    age: "200",
+    name: "Calculon",
+  },
+  {
+    tumnail: "/img/CLCL.jpg",
+    age: "200",
+    name: "Calculon",
+  },
+  {
+    tumnail: "/img/LSGN.jpg",
+    age: "54",
+    name: "Luis Gnecco",
+  },
+  {
+    tumnail: "/img/LSGN.jpg",
+    age: "54",
+    name: "Luis Gnecco",
+  },
 ];
-
-const tags=["caucasico","pelo corto","rubio","hombre","mujer","blanco","moreno"]
 
 function App() {
   return (
     <>
-      <TagFilter data={tags} />
+      <br />
       <ProfileGrid data={ProfileList} />
     </>
   );

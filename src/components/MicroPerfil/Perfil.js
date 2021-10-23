@@ -3,12 +3,9 @@ import Styled from "styled-components";
 import {
   Card,
   CardMedia,
-  Chip,
   Typography,
   CardActionArea,
   IconButton,
-  ListItem,
-  Paper,
   CardContent,
 } from "@material-ui/core";
 
@@ -27,29 +24,19 @@ const CustomBox = Styled(Card)`
         color:gray;
     }
 `;
-const CustomPaper = Styled(Paper)`
-    cursor:pointer;
-    width:50px;
-    height:30px;
-    
-
-    &:hover{
-        color:gray;
-    }
-`;
 
 export const Perfil = (data) => {
   const { tumnail, age, name } = data.props;
   return (
     <>
-      <CustomBox elevation={6} sx={{ maxWidth: 345 }}>
+      <CustomBox elevation={6} sx={{ maxWidth: 200 }}>
         <CardActionArea>
           <CustomImg component="img" image={tumnail} alt="green iguana" />
           <CardContent>
             <Typography gutterBottom variant="h6" component="div">
               {name}
             </Typography>
-            <Typography  variant="body3" component="ul" color="text.secondary">
+            <Typography variant="body2" component="ul">
               {age}
             </Typography>
           </CardContent>
