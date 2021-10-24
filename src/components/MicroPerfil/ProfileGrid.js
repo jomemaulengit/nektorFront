@@ -8,6 +8,11 @@ const Div = styled.div`
   margin-left: 15vw;
   margin-right: 15vw;
   position: relative;
+
+  @media (max-width: 768px) {
+    margin-left: 6vw;
+    margin-right: 6vw;
+  }
 `;
 
 const ProfileGrid = (data) => {
