@@ -7,6 +7,7 @@ const initialState = {
 
 //types
 const GET_TAGS = "GET_TAGS";
+const UPDATE_TAGS = "UPDATE_TAGS";
 
 //reducer
 export default function tagReducer(state = initialState, action) {
@@ -16,6 +17,11 @@ export default function tagReducer(state = initialState, action) {
         ...state,
         array: action.payload,
       };
+      case UPDATE_TAGS:
+      return {
+        ...state,
+        array: action.payload,
+      }
     default:
       return state;
   }
@@ -30,9 +36,20 @@ export const getTags = () => (dispatch, getState) => {
         type: GET_TAGS,
         payload: res.data.itemList.map((item) => ({
           tag: item.tag,
-          isActive: item.isActive,
+          color: item.color,
         })),
       });
     })
     .catch((err) => console.log(err));
 };
+
+export const updateTags = (tags) => (dispatch, getState) => {
+      dispatch({
+        type: UPDATE_TAGS,
+        payload: tags.map((item) => ({
+          tag: item.tag,
+          color: item.color,
+        })),
+      });
+};
+

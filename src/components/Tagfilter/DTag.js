@@ -3,16 +3,22 @@ import React from "react";
 import { useState } from "react";
 
 export const DTag = (tag) => {
-  const label = tag.tag.tag;
-  const [selected, setselected] = useState("primary");
-  const [active, setActive] = useState(true);
+  let label = tag.tag;
+  console.log(tag);
+  const [active, setActive] = useState(() => {
+    if (label.color === "primary") {
+      return true;
+    } else {
+      return false;
+    }
+  });
   const handleSelected = () => {
     if (active === true) {
-      setActive(false);
-      setselected("default");
+      setActive(!active);
+      label.color = "default";
     } else {
-      setActive(true);
-      setselected("primary");
+      setActive(!active);
+      label.color = "primary";
     }
   };
   return (
@@ -20,9 +26,9 @@ export const DTag = (tag) => {
       {" "}
       <Chip
         key={1}
-        label={label}
+        label={label.tag}
         clickable
-        color={selected}
+        color={label.color}
         onClick={handleSelected}
       />{" "}
     </>

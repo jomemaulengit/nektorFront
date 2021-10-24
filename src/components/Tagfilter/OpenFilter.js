@@ -6,7 +6,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { updateTags } from "../../redux/tagState";
 import { DTag } from "./DTag";
 
 const CustomModal = styled(Card)`
@@ -20,8 +22,13 @@ const CustomModal = styled(Card)`
 `;
 
 export const OpenFilter = (data) => {
+  const dispatch = useDispatch();
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    console.log(data.data);
+    dispatch(updateTags(data.data));
+  };
   const [open, setOpen] = useState(false);
   return (
     <>

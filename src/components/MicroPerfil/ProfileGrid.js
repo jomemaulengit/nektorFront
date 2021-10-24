@@ -12,7 +12,6 @@ const Div = styled.div`
 
 const ProfileGrid = (data) => {
   const labels = useSelector((state) => state.tags.array);
-  console.log(labels);
 
   return (
     <Div>
