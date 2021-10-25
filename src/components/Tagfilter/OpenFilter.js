@@ -38,7 +38,7 @@ export const OpenFilter = (data) => {
   const onInput = (i, limit) => {
     tags = [];
     i.target.value = i.target.value.toString().slice(0, limit);
-    data.data.map((item) => {
+    data.data.forEach((item) => {
       if (item.tag.includes(i.target.value)) {
         tags = [...tags, item].filter((x) => x != null);
       }
@@ -76,15 +76,6 @@ export const OpenFilter = (data) => {
               variant="outlined"
               onInput={(i) => onInput(i, 20)}
             />
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                handleClose();
-              }}
-            >
-              Filtrar
-            </Button>
             <br />
             <br />
             <Typography
@@ -98,6 +89,15 @@ export const OpenFilter = (data) => {
             </Typography>
             <br />
             <br />
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              Filtrar
+            </Button>
           </CardContent>
         </CustomModal>
       </Modal>
