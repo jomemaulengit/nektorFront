@@ -2,12 +2,11 @@ import {
   Button,
   Card,
   CardContent,
-  InputBase,
   Modal,
   Typography,
+  TextField,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { updateTags } from "../../redux/tagState";
@@ -29,12 +28,24 @@ const CustomModal = styled(Card)`
 `;
 
 export const OpenFilter = (data) => {
+  let tags = [];
   const dispatch = useDispatch();
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
     dispatch(updateTags(data.data));
   };
+  const onInput = (i, limit) => {
+    tags = [];
+    i.target.value = i.target.value.toString().slice(0, limit);
+    data.data.map((item) => {
+      if (item.tag.includes(i.target.value)) {
+        tags = [...tags, item].filter((x) => x != null);
+      }
+    });
+    console.log(tags);
+  };
+
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -58,6 +69,24 @@ export const OpenFilter = (data) => {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Elejir por caracteristicas
             </Typography>
+            <br />
+            <TextField
+              label="buscar"
+              color="primary"
+              variant="outlined"
+              onInput={(i) => onInput(i, 20)}
+            />
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              Filtrar
+            </Button>
+            <br />
+            <br />
             <Typography
               id="modal-modal-description"
               sx={{ mt: 2 }}
@@ -69,17 +98,6 @@ export const OpenFilter = (data) => {
             </Typography>
             <br />
             <br />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                handleClose();
-              }}
-            >
-              Filtrar
-            </Button>
-            <InputBase />
-            <FaSearch/>
           </CardContent>
         </CustomModal>
       </Modal>
