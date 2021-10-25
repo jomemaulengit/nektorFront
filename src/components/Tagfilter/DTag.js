@@ -4,7 +4,6 @@ import { useState } from "react";
 
 export const DTag = (tag) => {
   let label = tag.tag;
-  console.log(tag);
   const [active, setActive] = useState(() => {
     if (label.color === "primary") {
       return true;

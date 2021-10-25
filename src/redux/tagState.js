@@ -3,11 +3,13 @@ import axios from "axios";
 //constantes
 const initialState = {
   array: [],
+  profiles: [],
 };
 
 //types
 const GET_TAGS = "GET_TAGS";
 const UPDATE_TAGS = "UPDATE_TAGS";
+const UPDATE_PROFILE = "UPDATE_PROFILE";
 
 //reducer
 export default function tagReducer(state = initialState, action) {
@@ -17,11 +19,16 @@ export default function tagReducer(state = initialState, action) {
         ...state,
         array: action.payload,
       };
-      case UPDATE_TAGS:
+    case UPDATE_TAGS:
       return {
         ...state,
         array: action.payload,
-      }
+      };
+    case UPDATE_PROFILE:
+      return {
+        ...state,
+        profiles: action.payload,
+      };
     default:
       return state;
   }
@@ -44,12 +51,18 @@ export const getTags = () => (dispatch, getState) => {
 };
 
 export const updateTags = (tags) => (dispatch, getState) => {
-      dispatch({
-        type: UPDATE_TAGS,
-        payload: tags.map((item) => ({
-          tag: item.tag,
-          color: item.color,
-        })),
-      });
+  dispatch({
+    type: UPDATE_TAGS,
+    payload: tags.map((item) => ({
+      tag: item.tag,
+      color: item.color,
+    })),
+  });
 };
 
+export const getProfile = (profiles) => (dispatch, getState) => {
+  dispatch({
+    type: UPDATE_PROFILE,
+    payload: profiles.map((item) => item),
+  });
+};

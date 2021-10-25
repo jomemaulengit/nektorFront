@@ -12,7 +12,6 @@ import {
 import { FaStar } from "react-icons/fa";
 import { HiShare } from "react-icons/hi";
 import { IoMdText } from "react-icons/io";
-
 const CustomImg = Styled(CardMedia)`
     height: 180px;
 `;

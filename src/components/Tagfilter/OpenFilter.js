@@ -2,10 +2,12 @@ import {
   Button,
   Card,
   CardContent,
+  InputBase,
   Modal,
   Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { updateTags } from "../../redux/tagState";
@@ -14,11 +16,16 @@ import { DTag } from "./DTag";
 const CustomModal = styled(Card)`
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 20%;
   transform: translate(-50%, -50%);
-  width: 300px;
+  width: 400px;
   background-color: whitesmoke;
   box-shadow: 24;
+
+  @media (max-width: 600px) {
+    width: 300px;
+    left: 50%;
+  }
 `;
 
 export const OpenFilter = (data) => {
@@ -26,7 +33,6 @@ export const OpenFilter = (data) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    console.log(data.data);
     dispatch(updateTags(data.data));
   };
   const [open, setOpen] = useState(false);
@@ -72,6 +78,8 @@ export const OpenFilter = (data) => {
             >
               Filtrar
             </Button>
+            <InputBase />
+            <FaSearch/>
           </CardContent>
         </CustomModal>
       </Modal>
