@@ -18,12 +18,13 @@ const Div = styled.div`
 
 const ProfileGrid = (data) => {
   const labels = useSelector((state) => state.tags.array);
+  const ages = data.data.map((item) => item.age);
   const dispatch = useDispatch();
   dispatch(getProfile(data.data));
 
   return (
     <Div>
-      <OpenFilter data={labels} />
+      <OpenFilter data={[labels,ages]} />
       <br />
       <br />
       <Grid container spacing={2}>

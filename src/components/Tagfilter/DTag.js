@@ -20,7 +20,6 @@ export const DTag = (tag) => {
       label.color = "primary";
     }
   };
-  console.log(active);
   return (
     <>
       {" "}
