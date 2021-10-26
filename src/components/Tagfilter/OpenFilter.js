@@ -5,7 +5,13 @@ import {
   Modal,
   Typography,
   TextField,
+  Grid,
+  Select,
+  Box,
+  InputLabel,
+  MenuItem,
 } from "@material-ui/core";
+import { Rating } from "@material-ui/lab";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -15,7 +21,21 @@ import { DTag } from "./DTag";
 const CustomModal = styled(Card)`
   position: absolute;
   top: 50%;
-  left: 20%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: whitesmoke;
+  box-shadow: 24;
+
+  @media (max-width: 600px) {
+    width: 300px;
+    left: 50%;
+  }
+`;
+const CustomModalDos = styled(Card)`
+  position: absolute;
+  top: 50%;
+  left: 65%;
   transform: translate(-50%, -50%);
   width: 400px;
   background-color: whitesmoke;
@@ -32,7 +52,7 @@ export const OpenFilter = (data) => {
     <DTag tag={tag} key={key} />
   ));
   const [tagState, setTagState] = useState(initialTagState);
-  const [input, setinput] = useState("")
+  const [input, setinput] = useState("");
 
   const dispatch = useDispatch();
   const handleOpen = () => {
@@ -49,7 +69,7 @@ export const OpenFilter = (data) => {
     data.data.forEach((item) => {
       if (!item.tag.includes(i.target.value)) {
         item.color = "default";
-      }else{
+      } else {
         item.color = "primary";
       }
     });
@@ -74,41 +94,76 @@ export const OpenFilter = (data) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <CustomModal elevation={6}>
-          <CardContent>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Elejir por caracteristicas
-            </Typography>
-            <br />
-            <TextField
-              label="buscar"
-              color="primary"
-              variant="outlined"
-              defaultValue={input}
-              onInput={(i) => onInput(i, 20)}
-            />
-            <br />
-            <br />
-            <Typography
-              id="modal-modal-description"
-              sx={{ mt: 2 }}
-              component="span"
-            >
-              {tagState}
-            </Typography>
-            <br />
-            <br />
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                handleClose();
-              }}
-            >
-              Filtrar
-            </Button>
-          </CardContent>
-        </CustomModal>
+        <Grid>
+          <CustomModal elevation={6}>
+            <CardContent>
+              <br />
+              <TextField
+                label="caracteristicas"
+                color="primary"
+                variant="outlined"
+                defaultValue={input}
+                onInput={(i) => onInput(i, 20)}
+              />
+              <br />
+              <br />
+              <Typography
+                id="modal-modal-description"
+                sx={{ mt: 2 }}
+                component="span"
+              >
+                {tagState}
+              </Typography>
+              <br />
+              <br />
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                  handleClose();
+                }}
+              >
+                Filtrar
+              </Button>
+            </CardContent>
+          </CustomModal>
+
+          <CustomModalDos elevation={6}>
+            <CardContent>
+              <br />
+              <br />
+              <Box>
+                <InputLabel>Edad</InputLabel>
+                <Select variant="outlined" style={{ width: "180px" }} autoWidth>
+                  <MenuItem value={[18]}>todas las edades</MenuItem>
+                  <MenuItem value={[18, 22]}>18-22</MenuItem>
+                  <MenuItem value={[20, 25]}>18-22</MenuItem>
+                  <MenuItem value={[20, 25]}>20-25</MenuItem>
+                  <MenuItem value={[25, 30]}>25-30</MenuItem>
+                  <MenuItem value={[30, 35]}>30-35</MenuItem>
+                  <MenuItem value={[35, 40]}>35-40</MenuItem>
+                  <MenuItem value={[40, 50]}>40-50</MenuItem>
+                  <MenuItem value={[50, 60]}>50-60</MenuItem>
+                  <MenuItem value={[60, 70]}>60-70</MenuItem>
+                  <MenuItem value={[70, 80]}>70-80</MenuItem>
+                  <MenuItem value={[80]}>80+</MenuItem>
+                </Select>
+              </Box>
+              <br />
+              <br />
+              <Typography
+                id="modal-modal-description"
+                sx={{ mt: 2 }}
+                component="span"
+              >
+                <InputLabel>Favoritos</InputLabel>
+                <Rating size="large" name="popularity" />
+              </Typography>
+              <br />
+              <br />
+            </CardContent>
+          </CustomModalDos>
+        </Grid>
       </Modal>
     </>
   );
