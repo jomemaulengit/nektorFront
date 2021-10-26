@@ -28,22 +28,32 @@ const CustomModal = styled(Card)`
 `;
 
 export const OpenFilter = (data) => {
-  let tags = [];
+  let initialTagState = data.data.map((tag, key) => (
+    <DTag tag={tag} key={key} />
+  ));
+  const [tagState, setTagState] = useState(initialTagState);
+  const [input, setinput] = useState("")
+
   const dispatch = useDispatch();
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    setTagState(initialTagState);
+  };
   const handleClose = () => {
     setOpen(false);
     dispatch(updateTags(data.data));
   };
   const onInput = (i, limit) => {
-    tags = [];
+    setTagState(initialTagState);
     i.target.value = i.target.value.toString().slice(0, limit);
     data.data.forEach((item) => {
-      if (item.tag.includes(i.target.value)) {
-        tags = [...tags, item].filter((x) => x != null);
+      if (!item.tag.includes(i.target.value)) {
+        item.color = "default";
+      }else{
+        item.color = "primary";
       }
     });
-    console.log(tags);
+    setinput(i.target.value);
   };
 
   const [open, setOpen] = useState(false);
@@ -74,6 +84,7 @@ export const OpenFilter = (data) => {
               label="buscar"
               color="primary"
               variant="outlined"
+              defaultValue={input}
               onInput={(i) => onInput(i, 20)}
             />
             <br />
@@ -83,9 +94,7 @@ export const OpenFilter = (data) => {
               sx={{ mt: 2 }}
               component="span"
             >
-              {data.data.map((tag, key) => (
-                <DTag tag={tag} key={key} />
-              ))}
+              {tagState}
             </Typography>
             <br />
             <br />
