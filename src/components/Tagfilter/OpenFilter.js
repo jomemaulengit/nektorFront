@@ -35,7 +35,6 @@ export const OpenFilter = (data) => {
   let initialTagState = data.data[0].map((tag, key) => (
     <DTag tag={tag} key={key} />
   ));
-  const ages = data.data[1];
   const [age, setAge] = useState([18, 100]);
 
   const handleChange = (event, newValue) => {
@@ -55,7 +54,6 @@ export const OpenFilter = (data) => {
     dispatch(updateTags(data.data[0]));
   };
   const onInput = (i, limit) => {
-    setTagState(initialTagState);
     i.target.value = i.target.value.toString().slice(0, limit);
     data.data[0].forEach((item) => {
       if (!item.tag.includes(i.target.value)) {
@@ -65,6 +63,7 @@ export const OpenFilter = (data) => {
       }
     });
     setinput(i.target.value);
+    setTagState(initialTagState);
   };
 
   const [open, setOpen] = useState(false);
@@ -95,7 +94,7 @@ export const OpenFilter = (data) => {
                   variant="outlined"
                   defaultValue={input}
                   onInput={(i) => onInput(i, 20)}
-                  style={{left: "20px"}}
+                  style={{ left: "20px" }}
                 />
               </Box>
               <br />

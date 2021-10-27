@@ -1,5 +1,5 @@
 import { Chip } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 export const DTag = (tag) => {
@@ -20,6 +20,22 @@ export const DTag = (tag) => {
       label.color = "primary";
     }
   };
+
+  const refresh = () => {
+    if (active === true && label.color === "default") {
+      handleSelected();
+      console.clear();
+    }
+    if (active === false && label.color === "primary") {
+      handleSelected();
+      console.clear();
+    }
+  };
+  useEffect(() => {
+    refresh();
+  });
+  console.log(`${label.color}: ${active}`);
+
   return (
     <>
       {" "}
