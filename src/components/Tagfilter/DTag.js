@@ -24,17 +24,14 @@ export const DTag = (tag) => {
   const refresh = () => {
     if (active === true && label.color === "default") {
       handleSelected();
-      console.clear();
     }
     if (active === false && label.color === "primary") {
       handleSelected();
-      console.clear();
     }
   };
   useEffect(() => {
     refresh();
   });
-  console.log(`${label.color}: ${active}`);
 
   return (
     <>

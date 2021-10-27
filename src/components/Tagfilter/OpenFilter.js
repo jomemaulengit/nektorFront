@@ -11,6 +11,7 @@ import {
   Box,
 } from "@material-ui/core";
 import { SpeedDialIcon } from "@material-ui/lab";
+import { ImportExport } from "@mui/icons-material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -36,15 +37,15 @@ export const OpenFilter = (data) => {
   let initialTagState = data.data[0].map((tag, key) => (
     <DTag tag={tag} key={key} />
   ));
+  const [inputArray, setinputArray] = useState(["!"]);
+  const [input, setinput] = useState("");
   const [age, setAge] = useState([18, 100]);
+  const [tagState, setTagState] = useState(initialTagState);
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event, newValue) => {
     setAge(newValue);
   };
-
-  const [tagState, setTagState] = useState(initialTagState);
-  const [input, setinput] = useState("");
-
   const dispatch = useDispatch();
   const handleOpen = () => {
     setOpen(true);
@@ -60,14 +61,26 @@ export const OpenFilter = (data) => {
       if (!item.tag.includes(i.target.value)) {
         item.color = "default";
       } else {
-        item.color = "secondary";
+        item.color = "primary";
       }
     });
     setinput(i.target.value);
     setTagState(initialTagState);
   };
 
-  const [open, setOpen] = useState(false);
+  const addTag = () => {
+    setinputArray([...new Set(inputArray.concat(input))].filter(Boolean));
+    inputArray.forEach((inp) => {
+      data.data[0].forEach((item) => {
+        if (item.tag.includes(inp)) {
+          item.color = "primary";
+        }
+      });
+    });
+    setTagState(initialTagState);
+    console.log(inputArray);
+  };
+
   return (
     <>
       <Button
@@ -93,7 +106,7 @@ export const OpenFilter = (data) => {
                   label="caracteristicas"
                   color="primary"
                   variant="outlined"
-                  defaultValue={input}
+                  defaultValue=""
                   onInput={(i) => onInput(i, 20)}
                   style={{ left: "20px" }}
                 />
@@ -104,6 +117,9 @@ export const OpenFilter = (data) => {
                     borderRadius: "24px",
                     top: "25px",
                     position: "absolute",
+                  }}
+                  onClick={() => {
+                    addTag();
                   }}
                 >
                   <SpeedDialIcon />
