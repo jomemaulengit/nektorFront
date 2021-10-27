@@ -10,6 +10,7 @@ import {
   Slider,
   Box,
 } from "@material-ui/core";
+import { SpeedDialIcon } from "@material-ui/lab";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -26,7 +27,7 @@ const CustomModal = styled(Card)`
   box-shadow: 24;
 
   @media (max-width: 600px) {
-    width: 300px;
+    width: 100vw;
     left: 50%;
   }
 `;
@@ -59,7 +60,7 @@ export const OpenFilter = (data) => {
       if (!item.tag.includes(i.target.value)) {
         item.color = "default";
       } else {
-        item.color = "primary";
+        item.color = "secondary";
       }
     });
     setinput(i.target.value);
@@ -96,6 +97,17 @@ export const OpenFilter = (data) => {
                   onInput={(i) => onInput(i, 20)}
                   style={{ left: "20px" }}
                 />
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  style={{
+                    borderRadius: "24px",
+                    top: "25px",
+                    position: "absolute",
+                  }}
+                >
+                  <SpeedDialIcon />
+                </Button>
               </Box>
               <br />
               <Typography
