@@ -34,9 +34,12 @@ const CustomModal = styled(Card)`
 `;
 
 export const OpenFilter = (data) => {
-  const ProfileList = data.data;
+  let ProfileList = data.data;
   const tags = useSelector((state) => state.tags.array);
   let initialTagState = tags.map((tag, key) => <DTag tag={tag} key={key} />);
+  const [profileGrid, setProfileGrid] = useState(
+    <ProfileGrid data={ProfileList} />
+  );
   const [inputArray, setinputArray] = useState(["!"]);
   const [input, setinput] = useState("");
   const [age, setAge] = useState([18, 100]);
@@ -54,6 +57,17 @@ export const OpenFilter = (data) => {
   const handleClose = () => {
     setOpen(false);
     dispatch(updateTags(tags));
+    let filterTags = tags.filter(
+      (tag) => tag.color.localeCompare("primary") === 0
+    );
+    ProfileList = ProfileList.filter(
+      (profile) =>
+        parseInt(profile.age) >= age[0] &&
+        parseInt(profile.age) <= age[1] &&
+        profile.tag_a.localeCompare("blanco") === 0
+    );
+    setProfileGrid(<ProfileGrid data={ProfileList} />);
+    console.log(filterTags);
   };
   const onInput = (i, limit) => {
     i.target.value = i.target.value.toString().slice(0, limit);
@@ -83,7 +97,7 @@ export const OpenFilter = (data) => {
   return (
     <Box>
       <Button
-      style={{left: "18.2%", transform: "translateX(-50%)"}}
+        style={{ left: "18.2%", transform: "translateX(-50%)" }}
         variant="contained"
         color="primary"
         onClick={() => {
@@ -159,7 +173,7 @@ export const OpenFilter = (data) => {
           </CustomModal>
         </Grid>
       </Modal>
-      <ProfileGrid data={ProfileList} />
+      {profileGrid}
     </Box>
   );
 };
