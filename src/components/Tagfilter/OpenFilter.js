@@ -11,7 +11,6 @@ import {
   Box,
 } from "@material-ui/core";
 import { SpeedDialIcon } from "@material-ui/lab";
-import { ImportExport } from "@mui/icons-material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -151,6 +150,7 @@ export const OpenFilter = (data) => {
                 color="secondary"
                 onClick={() => {
                   handleClose();
+                  console.log(age);
                 }}
               >
                 Filtrar
