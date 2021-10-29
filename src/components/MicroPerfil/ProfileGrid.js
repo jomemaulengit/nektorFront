@@ -18,7 +18,6 @@ const Div = styled.div`
 
 const ProfileGrid = (data) => {
   const ProfileList = data.data;
-  console.log(ProfileList);
   return (
     <Div>
       <br />

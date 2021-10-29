@@ -11,6 +11,7 @@ import {
   Box,
 } from "@material-ui/core";
 import { SpeedDialIcon } from "@material-ui/lab";
+import { Tooltip } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -54,20 +55,33 @@ export const OpenFilter = (data) => {
     setOpen(true);
     setTagState(initialTagState);
   };
-  const handleClose = () => {
+  const handleCloseALL = () => {
     setOpen(false);
     dispatch(updateTags(tags));
-    let filterTags = tags.filter(
-      (tag) => tag.color.localeCompare("primary") === 0
-    );
+    let filterTags = tags
+      .filter((tag) => tag.color.localeCompare("primary") === 0)
+      .map((tag) => tag.tag);
     ProfileList = ProfileList.filter(
       (profile) =>
         parseInt(profile.age) >= age[0] &&
         parseInt(profile.age) <= age[1] &&
-        profile.tag_a.localeCompare("blanco") === 0
+        filterTags.every((tag) => profile.tags.includes(tag))
     );
     setProfileGrid(<ProfileGrid data={ProfileList} />);
-    console.log(filterTags);
+  };
+  const handleCloseSOME = () => {
+    setOpen(false);
+    dispatch(updateTags(tags));
+    let filterTags = tags
+      .filter((tag) => tag.color.localeCompare("primary") === 0)
+      .map((tag) => tag.tag);
+    ProfileList = ProfileList.filter(
+      (profile) =>
+        parseInt(profile.age) >= age[0] &&
+        parseInt(profile.age) <= age[1] &&
+        filterTags.some((tag) => profile.tags.includes(tag))
+    );
+    setProfileGrid(<ProfileGrid data={ProfileList} />);
   };
   const onInput = (i, limit) => {
     i.target.value = i.target.value.toString().slice(0, limit);
@@ -108,7 +122,7 @@ export const OpenFilter = (data) => {
       </Button>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseSOME}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -160,15 +174,37 @@ export const OpenFilter = (data) => {
               />
               <br />
               <br />
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  handleClose();
-                }}
+              <Tooltip
+                placement="top-start"
+                arrow
+                title="muestra solo los que cumplan todas las caracteristicas"
               >
-                Filtrar
-              </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    handleCloseALL();
+                  }}
+                >
+                  Filtrar todos
+                </Button>
+              </Tooltip>
+              <Tooltip
+                placement="top-start"
+                arrow
+                title="muestra los que cumplan alguna de lascaracteristicas"
+              >
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  style={{ marginLeft: "40px" }}
+                  onClick={() => {
+                    handleCloseSOME();
+                  }}
+                >
+                  Filtrar algunos
+                </Button>
+              </Tooltip>
             </CardContent>
           </CustomModal>
         </Grid>
