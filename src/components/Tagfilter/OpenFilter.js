@@ -12,9 +12,10 @@ import {
 } from "@material-ui/core";
 import { SpeedDialIcon } from "@material-ui/lab";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { updateTags } from "../../redux/tagState";
+import ProfileGrid from "../MicroPerfil/ProfileGrid";
 import { DTag } from "./DTag";
 
 const CustomModal = styled(Card)`
@@ -33,9 +34,9 @@ const CustomModal = styled(Card)`
 `;
 
 export const OpenFilter = (data) => {
-  let initialTagState = data.data[0].map((tag, key) => (
-    <DTag tag={tag} key={key} />
-  ));
+  const ProfileList = data.data;
+  const tags = useSelector((state) => state.tags.array);
+  let initialTagState = tags.map((tag, key) => <DTag tag={tag} key={key} />);
   const [inputArray, setinputArray] = useState(["!"]);
   const [input, setinput] = useState("");
   const [age, setAge] = useState([18, 100]);
@@ -52,11 +53,11 @@ export const OpenFilter = (data) => {
   };
   const handleClose = () => {
     setOpen(false);
-    dispatch(updateTags(data.data[0]));
+    dispatch(updateTags(tags));
   };
   const onInput = (i, limit) => {
     i.target.value = i.target.value.toString().slice(0, limit);
-    data.data[0].forEach((item) => {
+    tags.forEach((item) => {
       if (!item.tag.includes(i.target.value)) {
         item.color = "default";
       } else {
@@ -70,19 +71,19 @@ export const OpenFilter = (data) => {
   const addTag = () => {
     setinputArray([...new Set(inputArray.concat(input))].filter(Boolean));
     inputArray.forEach((inp) => {
-      data.data[0].forEach((item) => {
+      tags.forEach((item) => {
         if (item.tag.includes(inp)) {
           item.color = "primary";
         }
       });
     });
     setTagState(initialTagState);
-    console.log(inputArray);
   };
 
   return (
-    <>
+    <Box>
       <Button
+      style={{left: "18.2%", transform: "translateX(-50%)"}}
         variant="contained"
         color="primary"
         onClick={() => {
@@ -150,7 +151,6 @@ export const OpenFilter = (data) => {
                 color="secondary"
                 onClick={() => {
                   handleClose();
-                  console.log(age);
                 }}
               >
                 Filtrar
@@ -159,6 +159,7 @@ export const OpenFilter = (data) => {
           </CustomModal>
         </Grid>
       </Modal>
-    </>
+      <ProfileGrid data={ProfileList} />
+    </Box>
   );
 };
