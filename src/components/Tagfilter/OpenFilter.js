@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { SpeedDialIcon } from "@material-ui/lab";
 import { Tooltip } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { updateTags } from "../../redux/tagState";
@@ -46,6 +46,7 @@ export const OpenFilter = (data) => {
   const [age, setAge] = useState([18, 100]);
   const [tagState, setTagState] = useState(initialTagState);
   const [open, setOpen] = useState(false);
+  const ref = useRef();
 
   const handleChange = (event, newValue) => {
     setAge(newValue);
@@ -106,6 +107,7 @@ export const OpenFilter = (data) => {
       });
     });
     setTagState(initialTagState);
+    console.log(ref);
   };
 
   return (
@@ -131,6 +133,7 @@ export const OpenFilter = (data) => {
             <CardContent>
               <Box>
                 <TextField
+                  ref={ref}
                   label="caracteristicas"
                   color="primary"
                   variant="outlined"

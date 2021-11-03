@@ -1,9 +1,8 @@
 import Perfil from "./Perfil";
 import { Grid } from "@material-ui/core";
 import styled from "styled-components";
-// import { OpenFilter } from "../Tagfilter/OpenFilter";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getProfile } from "../../redux/tagState";
+import { Link, Route, Switch } from "react-router-dom";
+import { UserProfile } from "../PerfilDeActor/UserProfile";
 
 const Div = styled.div`
   margin-left: 15vw;
@@ -24,9 +23,13 @@ const ProfileGrid = (data) => {
       <br />
       <Grid container spacing={2}>
         {ProfileList.map((actor, key) => (
-          <Grid item xs={6} md={3} key={key}>
-            <Perfil props={actor} key={key} />
-          </Grid>
+          <div key={key} style={{ margin: "5px" }}>
+            <Link to={`/profile${key}`}>
+              <Grid item xs={6} md={3}>
+                <Perfil props={actor} />
+              </Grid>
+            </Link>
+          </div>
         ))}
       </Grid>
     </Div>

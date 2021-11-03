@@ -1,19 +1,8 @@
 import React from "react";
 import Styled from "styled-components";
-import {
-  Card,
-  CardMedia,
-  Typography,
-  CardActionArea,
-  IconButton,
-  CardContent,
-  ImageListItem,
-} from "@material-ui/core";
+import { Card, Typography } from "@material-ui/core";
 
-import { FaStar } from "react-icons/fa";
-import { HiShare } from "react-icons/hi";
-import { IoMdText } from "react-icons/io";
-import { Box, typography } from "@mui/system";
+import { Box } from "@mui/system";
 
 const Title = Styled(Typography)`
     color: #fff;
