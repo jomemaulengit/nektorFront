@@ -64,8 +64,8 @@ export const OpenFilter = (data) => {
       .map((tag) => tag.tag);
     ProfileList = ProfileList.filter(
       (profile) =>
-        parseInt(profile.age) >= age[0] &&
-        parseInt(profile.age) <= age[1] &&
+        parseInt(profile.edad) >= age[0] &&
+        parseInt(profile.edad) <= age[1] &&
         filterTags.every((tag) => profile.tags.includes(tag))
     );
     setProfileGrid(<ProfileGrid data={ProfileList} />);
@@ -78,8 +78,8 @@ export const OpenFilter = (data) => {
       .map((tag) => tag.tag);
     ProfileList = ProfileList.filter(
       (profile) =>
-        parseInt(profile.age) >= age[0] &&
-        parseInt(profile.age) <= age[1] &&
+        parseInt(profile.edad) >= age[0] &&
+        parseInt(profile.edad) <= age[1] &&
         filterTags.some((tag) => profile.tags.includes(tag))
     );
     setProfileGrid(<ProfileGrid data={ProfileList} />);
@@ -107,7 +107,6 @@ export const OpenFilter = (data) => {
       });
     });
     setTagState(initialTagState);
-    console.log(ref);
   };
 
   return (

@@ -2,19 +2,21 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export const UseGet = () => {
-  const [label, setLabel] = useState([]);
+  const [picAndNameState, setPicAndNameState] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/gettags`)
+      .get(`http://localhost:8080/api/getavatar`)
       .then((res) => {
-        setLabel(
-          res.data.itemList.map((tag) => ({
-            tag: tag.tag,
-            isActive: tag.isActive,
+        setPicAndNameState(
+          res.data.itemList.map((item) => ({
+            edad: item.edad,
+            tumnail: item.tumnail,
+            pseudonimo: item.pseudonimo,
+            tags: item.tags,
           }))
         );
       })
       .catch((err) => console.log(err));
   }, []);
-  return label;
+  return picAndNameState;
 };

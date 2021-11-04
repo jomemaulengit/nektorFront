@@ -1,8 +1,7 @@
 import Perfil from "./Perfil";
 import { Grid } from "@material-ui/core";
 import styled from "styled-components";
-import { Link, Route, Switch } from "react-router-dom";
-import { UserProfile } from "../PerfilDeActor/UserProfile";
+import { Link } from "react-router-dom";
 
 const Div = styled.div`
   margin-left: 15vw;

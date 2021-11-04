@@ -34,7 +34,7 @@ export default function tagReducer(state = initialState, action) {
     case GET_PIC_AND_NAME:
       return {
         ...state,
-        completeProfiles: action.payload,
+        picAndName: action.payload,
       };
     default:
       return state;
@@ -75,7 +75,6 @@ export const getProfile = (profiles) => (dispatch, getState) => {
 };
 
 export const getPicAndName = () => (dispatch, getState) => {
-  console.log("lolazo");
   axios
     .get(`http://localhost:8080/api/getavatar`)
     .then((res) => {
