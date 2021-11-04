@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { OpenFilter } from "./components/Tagfilter/OpenFilter";
-import { getTags } from "./redux/tagState";
+import { getPicAndName, getTags } from "./redux/tagState";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserProfile } from "./components/PerfilDeActor/UserProfile";
 
@@ -103,6 +103,7 @@ const ProfileList = [
 function App() {
   const dispatch = useDispatch();
   dispatch(getTags());
+  dispatch(getPicAndName());
   return (
     <Router>
       <Switch>
