@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Content } from "./Content";
 import { SideBar } from "./SideBar";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
+import { UseGetProfile } from "../../hooks/UseGetProfile";
 
 const Div = styled.div`
   position: relative;
@@ -13,65 +14,36 @@ const Div = styled.div`
   }
 `;
 
-const profile = [
-  {
-    nombre: "Thomas",
-    primerApellido: "Cruise",
-    segundoApellido: "Mapother",
-    edad: "34",
-    genero: "Masculino",
-    altura: "1.78",
-    ciudad: "los angeles",
-    tumnail: "/img/asd.jpg",
-    pseudonimo: "Tom Cruise",
-    reel: "https://www.youtube.com/watch?v=1_NbNhwid8M&t=17s&ab_channel=TomCruise",
-    fotos: [
-      "/img/TM1.jpg",
-      "/img/TM1.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM1.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM3.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM2.jpg",
-      "/img/TM3.jpg",
-    ],
-    redes: {
-      instagram: [
-        "https://www.instagram.com/tomcruise/?hl=es-la",
-        "@TomCruise",
-      ],
-      twiter: ["https://twitter.com/tomcruise?lang=es", "@TomCruise"],
-      facebook: ["https://www.facebook.com/tomcruise", "Tom cruise"],
+export const UserProfile = (data) => {
+  const id = data.data;
+  const res = UseGetProfile(id);
+  let profile = [
+    {
+      id: "loading",
+      nombre: "loading",
+      primerApellido: "loading",
+      segundoApellido: "loading",
+      edad: "loading",
+      genero: "loading",
+      altura: "loading",
+      ciudad: "loading",
+      tumnail: "loading",
+      pseudonimo: "loading",
+      reel: "loading",
+      fotos: ["loading"],
+      redes: {
+        twiter: ["loading"],
+        instagram: ["loading"],
+        facebook: ["loading"],
+      },
+      telefono: "loading",
+      correo: "loading",
+      tags: ["loading"],
     },
-    telefono: "55-55-55-55",
-    correo: "correogenerico.d@gmail.com",
-    tags: [
-      "pelo corto",
-      "cine",
-      "ojos azules",
-      "alto",
-      "hombre",
-      "caucasico",
-      "blanco",
-    ],
-  },
-];
+  ];
 
-export const UserProfile = () => {
+  console.log(res.item)
+
   return (
     <Div>
       <br />

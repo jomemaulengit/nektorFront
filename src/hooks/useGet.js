@@ -9,6 +9,7 @@ export const UseGet = () => {
       .then((res) => {
         setPicAndNameState(
           res.data.itemList.map((item) => ({
+            id: item._id,
             edad: item.edad,
             tumnail: item.tumnail,
             pseudonimo: item.pseudonimo,

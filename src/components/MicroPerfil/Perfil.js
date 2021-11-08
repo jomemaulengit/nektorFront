@@ -1,7 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
 import { Card, Typography } from "@material-ui/core";
-
 import { Box } from "@mui/system";
 
 const Title = Styled(Typography)`
@@ -35,12 +34,12 @@ const CustomBox = Styled(Card)`
 `;
 
 export const Perfil = (data) => {
-  const { tumnail, age, name } = data.props;
+  const { tumnail, age, pseudonimo } = data.props;
   return (
     <Box>
       <CustomBox elevation={6}>
         <IMG src={tumnail} />
-        <Title variant="h6">{name}</Title>
+        <Title variant="h6">{pseudonimo}</Title>
       </CustomBox>
     </Box>
   );

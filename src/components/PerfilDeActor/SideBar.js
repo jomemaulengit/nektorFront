@@ -14,8 +14,8 @@ const SCard = styled(Card)`
   height: 500px;
 
   @media (max-width: 768px) {
-      width: 93vw;
-      height: auto;
+    width: 93vw;
+    height: auto;
   }
 `;
 const SAvatar = styled(Avatar)`
@@ -43,11 +43,12 @@ export const SideBar = (data) => {
   const ciudad = data.data[0].ciudad;
   const genero = data.data[0].genero;
   const redes = data.data[0].redes;
+  const tumnail = data.data[0].tumnail;
 
   return (
     <SDiv>
       <SCard elevation={6}>
-        <SAvatar src="img\asd.jpg" />
+        <SAvatar src={tumnail} />
         <br />
         <br />
         <br />

@@ -3,14 +3,12 @@ import axios from "axios";
 //constantes
 const initialState = {
   array: [],
-  profiles: [],
   picAndName: [],
 };
 
 //types
 const GET_TAGS = "GET_TAGS";
 const UPDATE_TAGS = "UPDATE_TAGS";
-const UPDATE_PROFILE = "UPDATE_PROFILE";
 const GET_PIC_AND_NAME = "GET_PIC_AND_NAME";
 
 //reducer
@@ -25,11 +23,6 @@ export default function tagReducer(state = initialState, action) {
       return {
         ...state,
         array: action.payload,
-      };
-    case UPDATE_PROFILE:
-      return {
-        ...state,
-        profiles: action.payload,
       };
     case GET_PIC_AND_NAME:
       return {
@@ -67,13 +60,6 @@ export const updateTags = (tags) => (dispatch, getState) => {
   });
 };
 
-export const getProfile = (profiles) => (dispatch, getState) => {
-  dispatch({
-    type: UPDATE_PROFILE,
-    payload: profiles.map((item) => item),
-  });
-};
-
 export const getPicAndName = () => (dispatch, getState) => {
   axios
     .get(`http://localhost:8080/api/getavatar`)
@@ -81,6 +67,7 @@ export const getPicAndName = () => (dispatch, getState) => {
       dispatch({
         type: GET_PIC_AND_NAME,
         payload: res.data.itemList.map((item) => ({
+          id: item._id,
           edad: item.edad,
           tumnail: item.tumnail,
           pseudonimo: item.pseudonimo,
@@ -90,32 +77,3 @@ export const getPicAndName = () => (dispatch, getState) => {
     })
     .catch((err) => console.log(err));
 };
-
-// export const getPicAndName = () => (dispatch, getState) => {
-//   console.log("lolazo");
-//   axios
-//     .get(`http://localhost:8080/api/getavatar`)
-//     .then((res) => {
-//       dispatch({
-//         type: GET_PIC_AND_NAME,
-//         payload: res.data.itemList.map((item) => ({
-//           nombre: item.nombre,
-//           primerApellido: item.primerApellido,
-//           segundoApellido: item.segundoApellido,
-//           edad: item.edad,
-//           genero: item.genero,
-//           altura: item.altura,
-//           ciudad: item.ciudad,
-//           tumnail: item.tumnail,
-//           pseudonimo: item.pseudonimo,
-//           reel: item.reel,
-//           fotos: item.fotos,
-//           redes: item.redes,
-//           telefono: item.telefono,
-//           correo: item.correo,
-//           tags: item.tags,
-//         })),
-//       });
-//     })
-//     .catch((err) => console.log(err));
-// };
