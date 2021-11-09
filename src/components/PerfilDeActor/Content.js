@@ -28,8 +28,10 @@ const CCard = styled(Card)`
 `;
 
 export const Content = (data) => {
-  const fotos = data.data[0].fotos;
-  const reel = data.data[0].reel;
+  const fotos = data.data.fotos;
+  const reel = data.data.reel;
+  const correo = data.data.correo;
+  const telefono = data.data.telefono;
   const [value, setValue] = useState("1");
   const l = fotos.length;
 
@@ -83,11 +85,11 @@ export const Content = (data) => {
             <Button size="small" color="primary">
               correo
             </Button>
-            <Typography>{data.data[0].correo}</Typography>
+            <Typography>{correo}</Typography>
             <Button size="small" color="primary">
               telefono
             </Button>
-            <Typography>{data.data[0].telefono}</Typography>
+            <Typography>{telefono}</Typography>
             <Button size="small" color="primary">
               enviar notificacion
             </Button>

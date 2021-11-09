@@ -34,7 +34,7 @@ const CustomBox = Styled(Card)`
 `;
 
 export const Perfil = (data) => {
-  const { tumnail, age, pseudonimo } = data.props;
+  const { tumnail, pseudonimo } = data.props;
   return (
     <Box>
       <CustomBox elevation={6}>

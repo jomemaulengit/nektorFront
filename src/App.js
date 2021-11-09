@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { OpenFilter } from "./components/Tagfilter/OpenFilter";
 import { getPicAndName, getTags } from "./redux/tagState";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserProfile } from "./components/PerfilDeActor/UserProfile";
 import { UseGet } from "./hooks/useGet";
-import { UseGetProfile } from "./hooks/UseGetProfile";
 
 function App() {
   const dispatch = useDispatch();

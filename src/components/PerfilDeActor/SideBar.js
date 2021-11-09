@@ -1,4 +1,11 @@
-import { Avatar, Card, CardContent, Link, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  Card,
+  CardContent,
+  Link,
+  Typography,
+} from "@material-ui/core";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Stack } from "@mui/material";
 import React from "react";
@@ -36,14 +43,15 @@ const SAvatar = styled(Avatar)`
 `;
 
 export const SideBar = (data) => {
-  const nombre = data.data[0].nombre;
-  const apellido = data.data[0].primerApellido;
-  const edad = data.data[0].edad;
-  const altura = data.data[0].altura;
-  const ciudad = data.data[0].ciudad;
-  const genero = data.data[0].genero;
-  const redes = data.data[0].redes;
-  const tumnail = data.data[0].tumnail;
+  console.log(data.data);
+  const tumnail = data.data.tumnail;
+  const nombre = data.data.nombre;
+  const primerApellido = data.data.primerApellido;
+  const edad = data.data.edad;
+  const genero = data.data.genero;
+  const altura = data.data.altura;
+  const ciudad = data.data.ciudad;
+  const redes = data.data.redes;
 
   return (
     <SDiv>
@@ -55,25 +63,30 @@ export const SideBar = (data) => {
         <br />
         <br />
         <CardContent>
-          <Typography variant="h6">{nombre + " " + apellido}</Typography>
-          <Typography variant="h6">{`edad: ${edad}`}</Typography>
-          <Typography variant="h6">{`altura: ${altura}`}</Typography>
-          <Typography variant="h6">{`genero: ${genero}`}</Typography>
-          <Typography variant="h6">{`ciudad: ${ciudad}`}</Typography>
+          <Typography>{nombre + " " + primerApellido}</Typography>
+          <Typography>{`edad: ${edad}`}</Typography>
+          <Typography>{`altura: ${altura}`}</Typography>
+          <Typography>{`genero: ${genero}`}</Typography>
+          <Typography>{`ciudad: ${ciudad}`}</Typography>
           <hr />
           <Stack spacing={1}>
-            <Link href={redes.twiter[0]}>
-              <Twitter />
-              {redes.twiter[1]}
-            </Link>
-            <Link href={redes.facebook[0]}>
-              <Facebook />
-              {redes.facebook[1]}
-            </Link>
-            <Link href={redes.instagram[0]}>
-              <Instagram />
-              {redes.instagram[1]}
-            </Link>
+            {Object.entries(redes).map(([key, value]) => (
+              <Button
+                key={key}
+                color="primary"
+                startIcon={
+                  key === "facebook" ? (
+                    <Facebook />
+                  ) : key === "twiter" ? (
+                    <Twitter />
+                  ) : (
+                    <Instagram />
+                  )
+                }
+              >
+                <Link href={value[0]}>{value[1]}</Link>
+              </Button>
+            ))}
           </Stack>
         </CardContent>
       </SCard>
