@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Button, CircularProgress, Grid } from "@material-ui/core";
+import { CircularProgress, Grid } from "@material-ui/core";
 import { UseGetProfile } from "../../hooks/UseGetProfile";
 import { SideBar } from "./SideBar";
 import { Content } from "./Content";
