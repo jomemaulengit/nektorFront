@@ -43,7 +43,6 @@ const SAvatar = styled(Avatar)`
 `;
 
 export const SideBar = (data) => {
-  console.log(data.data);
   const tumnail = data.data.tumnail;
   const nombre = data.data.nombre;
   const primerApellido = data.data.primerApellido;

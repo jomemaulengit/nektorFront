@@ -2,7 +2,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export const UseGetProfile = (id) => {
-  const [profile, setprofile] = useState([]);
+  const [profile, setprofile] = useState({
+    data: [],
+    loading: true,
+  });
   useEffect(() => {
     axios({
       method: "post",
@@ -13,7 +16,10 @@ export const UseGetProfile = (id) => {
       },
     })
       .then((response) => {
-        setprofile(response.data);
+        setprofile({
+          data: response.data,
+          loading: response.data ? false : true,
+        });
       })
       .catch((error) => {
         console.log(error);

@@ -14,37 +14,11 @@ const Div = styled.div`
   }
 `;
 
-export const UserProfile = (data) => {
-  const id = data.data;
-  const item = UseGetProfile(id);
-  const [sideBar, setsideBar] = useState(<CircularProgress />);
-  const [profile, setProfile] = useState({
-    item: {
-      id: "loading",
-    },
-  });
-
-  const handleChange = () => {
-    setProfile(item.item);
-  };
-  const lol = () => {
-    setsideBar(
-      <>
-        <SideBar data={profile} />
-        <Content data={profile} />
-      </>
-    );
-  };
-
+export const UserProfile = (prop) => {
+  const id = prop.data;
+  const { data, loading } = UseGetProfile(id);
   return (
     <Div>
-      <Button variant="contained" onClick={handleChange}>
-        Cambiar
-      </Button>
-
-      <Button variant="contained" onClick={lol}>
-        lol
-      </Button>
       <br />
       <br />
       <br />
@@ -58,8 +32,14 @@ export const UserProfile = (data) => {
       <br />
       <br />
       <Grid container columns={{ xs: 2, md: 2 }}>
-        {sideBar}
-        <br />
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <SideBar data={data.item} />
+            <Content data={data.item} />
+          </>
+        )}
       </Grid>
       <br />
       <br />
