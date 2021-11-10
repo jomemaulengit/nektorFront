@@ -14,8 +14,9 @@ export const UseGet = () => {
           data: res.data.itemList.map((item) => ({
             id: item._id,
             edad: item.edad,
+            nombre: item.nombre,
+            primerApellido: item.primerApellido,
             tumnail: item.tumnail,
-            pseudonimo: item.pseudonimo,
             tags: item.tags,
           })),
           loading: res.data ? false : true,

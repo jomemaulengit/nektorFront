@@ -68,9 +68,10 @@ export const getPicAndName = () => (dispatch, getState) => {
         type: GET_PIC_AND_NAME,
         payload: res.data.itemList.map((item) => ({
           id: item._id,
+          nombre: item.nombre,
+          primerApellido: item.primerApellido,
           edad: item.edad,
           tumnail: item.tumnail,
-          pseudonimo: item.pseudonimo,
           tags: item.tags,
         })),
       });

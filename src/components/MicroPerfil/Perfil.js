@@ -34,12 +34,12 @@ const CustomBox = Styled(Card)`
 `;
 
 export const Perfil = (data) => {
-  const { tumnail, pseudonimo } = data.props;
+  const { nombre, primerApellido, tumnail } = data.props;
   return (
     <Box>
       <CustomBox elevation={6}>
         <IMG src={tumnail} />
-        <Title variant="h6">{pseudonimo}</Title>
+        <Title variant="h6">{`${nombre} ${primerApellido}`}</Title>
       </CustomBox>
     </Box>
   );

@@ -23,7 +23,7 @@ const ProfileGrid = (data) => {
       <Grid container spacing={2}>
         {ProfileList.map((actor, key) => (
           <div key={key} style={{ margin: "5px" }}>
-            <Link to={`/perfil/${actor.pseudonimo}${actor.id}`}>
+            <Link to={`/perfil/${actor.id}`}>
               <Grid item xs={6} md={3}>
                 <Perfil props={actor} />
               </Grid>

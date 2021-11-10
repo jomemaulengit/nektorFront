@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserProfile } from "./components/PerfilDeActor/UserProfile";
 import { UseGet } from "./hooks/useGet";
 import { CircularProgress } from "@material-ui/core";
+import { CreateUser } from "./components/CreateUserForm/CreateUser";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,17 +22,16 @@ function App() {
           <CircularProgress />
         ) : (
           data.map((item, index) => (
-            <Route
-              exact
-              path={`/perfil/${item.pseudonimo}${item.id}`}
-              key={index}
-            >
+            <Route exact path={`/perfil/${item.id}`} key={index}>
               <UserProfile data={item.id} />
             </Route>
           ))
         )}
         <Route exact path="/">
           <OpenFilter data={data} />
+        </Route>
+        <Route exact path="/createuser">
+          <CreateUser />
         </Route>
       </Switch>
     </Router>
