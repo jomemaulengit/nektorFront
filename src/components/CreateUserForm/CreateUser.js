@@ -10,15 +10,28 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Alert, CssBaseline } from "@mui/material";
-import { Autocomplete, SpeedDialIcon } from "@material-ui/lab";
+import { SpeedDialIcon } from "@material-ui/lab";
 import { Camera } from "@mui/icons-material";
-import { wordsValidator } from "../../helper/createUserValidator";
+import {
+  emailValidator,
+  phoneValidator,
+  wordsValidator,
+} from "../../helper/createUserValidator";
 
 export const CreateUser = () => {
-  const [warning, setwarning] = useState([false, false, false, false]);
+  const [warning, setwarning] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
   const onInput = (i, limit) => {
     i.target.value = i.target.value.toString().slice(0, limit);
     let word = wordsValidator(i.target.value);
+    let email = emailValidator(i.target.value);
+    let phone = phoneValidator(i.target.value);
     setwarning(
       i.target.name.includes("firstName")
         ? [word.res.params.flag, ...warning.slice(1)]
@@ -28,8 +41,13 @@ export const CreateUser = () => {
         ? [...warning.slice(0, 2), word.res.params.flag, ...warning.slice(3)]
         : i.target.name.includes("city")
         ? [...warning.slice(0, 3), word.res.params.flag, ...warning.slice(4)]
-        : [false, false, false, false]
+        : i.target.name.includes("mail")
+        ? [...warning.slice(0, 4), email.res.params.flag, ...warning.slice(5)]
+        : i.target.name.includes("phone")
+        ? [...warning.slice(0, 5), phone.res.params.flag, ...warning.slice(6)]
+        : [false, false, false, false, false, false]
     );
+    console.log(warning);
   };
 
   return (
@@ -41,7 +59,7 @@ export const CreateUser = () => {
             position: "absolute",
             width: "100px",
             height: "100px",
-            left: "43vw",
+            left: "35%",
             top: "8vh",
             zIndex: "1",
           }}
@@ -52,7 +70,7 @@ export const CreateUser = () => {
           style={{
             position: "absolute",
             top: "18vh",
-            left: "48vw",
+            left: "35%",
             zIndex: "2",
             backgroundColor: "darkcyan",
           }}
@@ -145,28 +163,7 @@ export const CreateUser = () => {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <Autocomplete
-                  id="combo-box-demo"
-                  disablePortal
-                  options={["Femenino", "LGBT+", "Masculino"]}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Sexo" variant="outlined" />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="altura"
-                  name="tall"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="tall"
-                  label="altura"
-                  autoFocus
-                />
-              </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   error={!warning[3]}
@@ -191,6 +188,7 @@ export const CreateUser = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  error={!warning[5]}
                   autoComplete="telefono"
                   name="phone"
                   variant="outlined"
@@ -199,10 +197,19 @@ export const CreateUser = () => {
                   id="telefono"
                   label="telefono"
                   autoFocus
+                  onInput={(i) => {
+                    onInput(i, 13);
+                  }}
                 />
+                <Collapse in={!warning[5]}>
+                  <Alert severity="error">
+                    el formato de telefono no es valido
+                  </Alert>
+                </Collapse>{" "}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
+                  error={!warning[4]}
                   autoComplete="correo"
                   name="mail"
                   variant="outlined"
@@ -211,18 +218,28 @@ export const CreateUser = () => {
                   id="mail"
                   label="correo"
                   autoFocus
+                  onInput={(i) => {
+                    onInput(i, 50);
+                  }}
                 />
+                <Collapse in={!warning[4]}>
+                  <Alert severity="error">
+                    el correo debe tener un formato valido
+                  </Alert>
+                </Collapse>{" "}
               </Grid>
-              <Button
-                style={{
-                  left: "38vw",
-                }}
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
-                Crear perfil
-              </Button>
+              <Grid item xs={12} sm={6}>
+                <Button
+                  style={{
+                    left: "38vw",
+                  }}
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
+                  Crear perfil
+                </Button>
+              </Grid>
             </Grid>
           </form>
         </div>
