@@ -17,8 +17,29 @@ import {
   phoneValidator,
   wordsValidator,
 } from "../../helper/createUserValidator";
+import { PostCreateUser } from "../../helper/postCreateUser";
 
 export const CreateUser = () => {
+  const handleSubmit = (e) => {
+    const profile = e.target;
+    e.preventDefault();
+    PostCreateUser({
+      nombre: profile[0].value,
+      primerApellido: profile[2].value,
+      segundoApellido: profile[4].value,
+      edad: profile[6].value,
+      genero: "indefinido",
+      altura: "indefinido",
+      ciudad: profile[8].value,
+      tumnail: "indefinido",
+      reel: "indefinido",
+      fotos: [],
+      redes: [],
+      telefono: profile[10].value,
+      correo: profile[12].value,
+      tags: [],
+    });
+  };
   const [warning, setwarning] = useState([
     false,
     false,
@@ -47,7 +68,6 @@ export const CreateUser = () => {
         ? [...warning.slice(0, 5), phone.res.params.flag, ...warning.slice(6)]
         : [false, false, false, false, false, false]
     );
-    console.log(warning);
   };
 
   return (
@@ -83,7 +103,17 @@ export const CreateUser = () => {
           <Typography component="h1" variant="h5">
             Crear cuenta de usuario
           </Typography>
-          <form noValidate onSubmit={() => console.log("hola mundo")}>
+          <form
+            noValidate
+            onSubmit={(e) => {
+              if (warning.every((v) => v === true)) {
+                handleSubmit(e);
+              } else {
+                e.preventDefault();
+                alert("Por favor, llene todos los campos correctamente");
+              }
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
