@@ -18,6 +18,7 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import styled from "styled-components";
+import { ProfileTags } from "./ProfileTags";
 
 const CCard = styled(Card)`
   position: relative;
@@ -51,6 +52,7 @@ export const EditContent = (data) => {
               <Tab label="Fotos" value="1" />
               <Tab label="Reel" value="2" />
               <Tab label="Contacto" value="3" />
+              <Tab label="Etiquetas" value="4" />
             </TabList>
           </Box>
           <TabPanel value="1">
@@ -197,6 +199,12 @@ export const EditContent = (data) => {
                 </Button>
               </Grid>
             </Grid>{" "}
+          </TabPanel>
+          <TabPanel value="4">
+            <ProfileTags />
+            <Button type="submit" variant="contained" color="primary">
+              Actualizar
+            </Button>
           </TabPanel>
         </TabContext>
       </CCard>
