@@ -7,6 +7,7 @@ import { UserProfile } from "./components/PerfilDeActor/UserProfile";
 import { UseGet } from "./hooks/useGet";
 import { CircularProgress } from "@material-ui/core";
 import { CreateUser } from "./components/CreateUserForm/CreateUser";
+import { EditUserProfile } from "./components/PerfilDeActor/EditProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function App() {
         ) : (
           data.map((item, index) => (
             <Route exact path={`/perfil/${item.id}`} key={index}>
-              <UserProfile data={item.id} />
+              <EditUserProfile data={item.id} />
             </Route>
           ))
         )}

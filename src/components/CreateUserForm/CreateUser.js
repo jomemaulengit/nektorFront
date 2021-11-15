@@ -14,6 +14,7 @@ import { SpeedDialIcon } from "@material-ui/lab";
 import { Camera } from "@mui/icons-material";
 import {
   emailValidator,
+  passwordValidator,
   phoneValidator,
   wordsValidator,
 } from "../../helper/createUserValidator";
@@ -38,9 +39,11 @@ export const CreateUser = () => {
       telefono: profile[10].value,
       correo: profile[12].value,
       tags: [],
+      password: profile[14].value,
     });
   };
   const [warning, setwarning] = useState([
+    false,
     false,
     false,
     false,
@@ -53,6 +56,7 @@ export const CreateUser = () => {
     let word = wordsValidator(i.target.value);
     let email = emailValidator(i.target.value);
     let phone = phoneValidator(i.target.value);
+    let pass = passwordValidator(i.target.value);
     setwarning(
       i.target.name.includes("firstName")
         ? [word.res.params.flag, ...warning.slice(1)]
@@ -66,7 +70,9 @@ export const CreateUser = () => {
         ? [...warning.slice(0, 4), email.res.params.flag, ...warning.slice(5)]
         : i.target.name.includes("phone")
         ? [...warning.slice(0, 5), phone.res.params.flag, ...warning.slice(6)]
-        : [false, false, false, false, false, false]
+        : i.target.name.includes("pass")
+        ? [...warning.slice(0, 6), pass.res.params.flag, ...warning.slice(7)]
+        : [false, false, false, false, false, false, false, false]
     );
   };
 
@@ -255,6 +261,25 @@ export const CreateUser = () => {
                 <Collapse in={!warning[4]}>
                   <Alert severity="error">
                     el correo debe tener un formato valido
+                  </Alert>
+                </Collapse>{" "}
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  error={!warning[6]}
+                  name="pass"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="clave secreta"
+                  autoFocus
+                  onInput={(i) => {
+                    onInput(i, 40);
+                  }}
+                />
+                <Collapse in={!warning[6]}>
+                  <Alert severity="error">
+                    su clave debe tener minimo 8 caracteres
                   </Alert>
                 </Collapse>{" "}
               </Grid>

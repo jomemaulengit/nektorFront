@@ -63,3 +63,24 @@ export const phoneValidator = (prop) => {
       };
   return value;
 }
+
+export const passwordValidator = (prop) => {
+  let value = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(prop)
+    ? {
+        res: {
+          params: {
+            flag: true,
+            value: prop,
+          },
+        },
+      }
+    : {
+        res: {
+          params: {
+            flag: false,
+            value: prop,
+          },
+        },
+      };
+  return value;
+}
