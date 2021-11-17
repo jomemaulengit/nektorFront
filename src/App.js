@@ -8,6 +8,7 @@ import { UseGet } from "./hooks/useGet";
 import { CircularProgress } from "@material-ui/core";
 import { CreateUser } from "./components/CreateUserForm/CreateUser";
 import { EditUserProfile } from "./components/PerfilDeActor/EditProfile";
+import { LoginForm } from "./components/LoginForm/LoginForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,9 @@ function App() {
         </Route>
         <Route exact path="/createuser">
           <CreateUser />
+        </Route>
+        <Route exact path="/login">
+          <LoginForm />
         </Route>
       </Switch>
     </Router>
