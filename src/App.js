@@ -9,6 +9,7 @@ import { CircularProgress } from "@material-ui/core";
 import { CreateUser } from "./components/CreateUserForm/CreateUser";
 import { EditUserProfile } from "./components/PerfilDeActor/EditProfile";
 import { LoginForm } from "./components/LoginForm/LoginForm";
+import { NavBar } from "./components/NavBar/NavBar";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,28 +19,32 @@ function App() {
   const { data, loading } = UseGet();
 
   return (
-    <Router>
-      <Switch>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          data.map((item, index) => (
-            <Route exact path={`/perfil/${item.id}`} key={index}>
-              <EditUserProfile data={item.id} />
-            </Route>
-          ))
-        )}
-        <Route exact path="/">
-          <OpenFilter data={data} />
-        </Route>
-        <Route exact path="/createuser">
-          <CreateUser />
-        </Route>
-        <Route exact path="/login">
-          <LoginForm />
-        </Route>
-      </Switch>
-    </Router>
+    <>
+      <Router>
+        <NavBar />
+        <Switch>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            data.map((item, index) => (
+              <Route exact path={`/perfil/${item.id}`} key={index}>
+                <EditUserProfile data={item.id} />
+              </Route>
+            ))
+          )}
+          <Route exact path="/">
+            <br/>
+            <OpenFilter data={data} />
+          </Route>
+          <Route exact path="/createuser">
+            <CreateUser />
+          </Route>
+          <Route exact path="/login">
+            <LoginForm />
+          </Route>
+        </Switch>
+      </Router>
+    </>
   );
 }
 
