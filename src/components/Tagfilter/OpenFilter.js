@@ -6,67 +6,87 @@ import {
   Typography,
   TextField,
   Grid,
-  Select,
-  Box,
   InputLabel,
-  MenuItem,
+  Slider,
+  Box,
 } from "@material-ui/core";
-import { Rating } from "@material-ui/lab";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { SpeedDialIcon } from "@material-ui/lab";
+import { Tooltip } from "@mui/material";
+import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { updateTags } from "../../redux/tagState";
+import ProfileGrid from "../MicroPerfil/ProfileGrid";
 import { DTag } from "./DTag";
 
 const CustomModal = styled(Card)`
   position: absolute;
   top: 50%;
-  left: 35%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
+  width: 600px;
   background-color: whitesmoke;
   box-shadow: 24;
 
   @media (max-width: 600px) {
-    width: 300px;
-    left: 50%;
-  }
-`;
-const CustomModalDos = styled(Card)`
-  position: absolute;
-  top: 50%;
-  left: 65%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  background-color: whitesmoke;
-  box-shadow: 24;
-
-  @media (max-width: 600px) {
-    width: 300px;
+    width: 100vw;
     left: 50%;
   }
 `;
 
 export const OpenFilter = (data) => {
-  let initialTagState = data.data.map((tag, key) => (
-    <DTag tag={tag} key={key} />
-  ));
-  const [tagState, setTagState] = useState(initialTagState);
+  let ProfileList = data.data;
+  const tags = useSelector((state) => state.tags.array);
+  let initialTagState = tags.map((tag, key) => <DTag tag={tag} key={key} />);
+  const [profileGrid, setProfileGrid] = useState(
+    <ProfileGrid data={ProfileList} />
+  );
+  const [inputArray, setinputArray] = useState(["!"]);
   const [input, setinput] = useState("");
+  const [age, setAge] = useState([18, 100]);
+  const [tagState, setTagState] = useState(initialTagState);
+  const [open, setOpen] = useState(false);
+  const ref = useRef();
 
+  const handleChange = (event, newValue) => {
+    setAge(newValue);
+  };
   const dispatch = useDispatch();
   const handleOpen = () => {
     setOpen(true);
     setTagState(initialTagState);
   };
-  const handleClose = () => {
+  const handleCloseALL = () => {
     setOpen(false);
-    dispatch(updateTags(data.data));
+    dispatch(updateTags(tags));
+    let filterTags = tags
+      .filter((tag) => tag.color.localeCompare("primary") === 0)
+      .map((tag) => tag.tag);
+    ProfileList = ProfileList.filter(
+      (profile) =>
+        parseInt(profile.edad) >= age[0] &&
+        parseInt(profile.edad) <= age[1] &&
+        filterTags.every((tag) => profile.tags.includes(tag))
+    );
+    setProfileGrid(<ProfileGrid data={ProfileList} />);
+  };
+  const handleCloseSOME = () => {
+    setOpen(false);
+    dispatch(updateTags(tags));
+    let filterTags = tags
+      .filter((tag) => tag.color.localeCompare("primary") === 0)
+      .map((tag) => tag.tag);
+    ProfileList = ProfileList.filter(
+      (profile) =>
+        parseInt(profile.edad) >= age[0] &&
+        parseInt(profile.edad) <= age[1] &&
+        filterTags.some((tag) => profile.tags.includes(tag))
+    );
+    setProfileGrid(<ProfileGrid data={ProfileList} />);
   };
   const onInput = (i, limit) => {
-    setTagState(initialTagState);
     i.target.value = i.target.value.toString().slice(0, limit);
-    data.data.forEach((item) => {
+    tags.forEach((item) => {
       if (!item.tag.includes(i.target.value)) {
         item.color = "default";
       } else {
@@ -74,12 +94,25 @@ export const OpenFilter = (data) => {
       }
     });
     setinput(i.target.value);
+    setTagState(initialTagState);
   };
 
-  const [open, setOpen] = useState(false);
+  const addTag = () => {
+    setinputArray([...new Set(inputArray.concat(input))].filter(Boolean));
+    inputArray.forEach((inp) => {
+      tags.forEach((item) => {
+        if (item.tag.includes(inp)) {
+          item.color = "primary";
+        }
+      });
+    });
+    setTagState(initialTagState);
+  };
+
   return (
-    <>
+    <Box>
       <Button
+        style={{ left: "18.2%", transform: "translateX(-50%)" }}
         variant="contained"
         color="primary"
         onClick={() => {
@@ -90,22 +123,38 @@ export const OpenFilter = (data) => {
       </Button>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseSOME}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Grid>
           <CustomModal elevation={6}>
             <CardContent>
-              <br />
-              <TextField
-                label="caracteristicas"
-                color="primary"
-                variant="outlined"
-                defaultValue={input}
-                onInput={(i) => onInput(i, 20)}
-              />
-              <br />
+              <Box>
+                <TextField
+                  ref={ref}
+                  label="caracteristicas"
+                  color="primary"
+                  variant="outlined"
+                  defaultValue=""
+                  onInput={(i) => onInput(i, 20)}
+                  style={{ left: "20px" }}
+                />
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  style={{
+                    borderRadius: "24px",
+                    top: "25px",
+                    position: "absolute",
+                  }}
+                  onClick={() => {
+                    addTag();
+                  }}
+                >
+                  <SpeedDialIcon />
+                </Button>
+              </Box>
               <br />
               <Typography
                 id="modal-modal-description"
@@ -116,55 +165,53 @@ export const OpenFilter = (data) => {
               </Typography>
               <br />
               <br />
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  handleClose();
-                }}
+              <InputLabel>Edades</InputLabel>
+              <Slider
+                value={age}
+                onChange={handleChange}
+                getAriaValueText={() => age}
+                valueLabelDisplay="auto"
+                getAriaLabel={() => `rango de edades`}
+                defaultValue={[20, 40]}
+              />
+              <br />
+              <br />
+              <Tooltip
+                placement="top-start"
+                arrow
+                title="muestra solo los que cumplan todas las caracteristicas"
               >
-                Filtrar
-              </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    handleCloseALL();
+                  }}
+                >
+                  Filtrar todos
+                </Button>
+              </Tooltip>
+              <Tooltip
+                placement="top-start"
+                arrow
+                title="muestra los que cumplan alguna de lascaracteristicas"
+              >
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  style={{ marginLeft: "40px" }}
+                  onClick={() => {
+                    handleCloseSOME();
+                  }}
+                >
+                  Filtrar algunos
+                </Button>
+              </Tooltip>
             </CardContent>
           </CustomModal>
-
-          <CustomModalDos elevation={6}>
-            <CardContent>
-              <br />
-              <br />
-              <Box>
-                <InputLabel>Edad</InputLabel>
-                <Select variant="outlined" style={{ width: "180px" }} autoWidth>
-                  <MenuItem value={[18]}>todas las edades</MenuItem>
-                  <MenuItem value={[18, 22]}>18-22</MenuItem>
-                  <MenuItem value={[20, 25]}>18-22</MenuItem>
-                  <MenuItem value={[20, 25]}>20-25</MenuItem>
-                  <MenuItem value={[25, 30]}>25-30</MenuItem>
-                  <MenuItem value={[30, 35]}>30-35</MenuItem>
-                  <MenuItem value={[35, 40]}>35-40</MenuItem>
-                  <MenuItem value={[40, 50]}>40-50</MenuItem>
-                  <MenuItem value={[50, 60]}>50-60</MenuItem>
-                  <MenuItem value={[60, 70]}>60-70</MenuItem>
-                  <MenuItem value={[70, 80]}>70-80</MenuItem>
-                  <MenuItem value={[80]}>80+</MenuItem>
-                </Select>
-              </Box>
-              <br />
-              <br />
-              <Typography
-                id="modal-modal-description"
-                sx={{ mt: 2 }}
-                component="span"
-              >
-                <InputLabel>Favoritos</InputLabel>
-                <Rating size="large" name="popularity" />
-              </Typography>
-              <br />
-              <br />
-            </CardContent>
-          </CustomModalDos>
         </Grid>
       </Modal>
-    </>
+      {profileGrid}
+    </Box>
   );
 };

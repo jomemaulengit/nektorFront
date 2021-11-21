@@ -1,56 +1,47 @@
 import React from "react";
 import Styled from "styled-components";
-import {
-  Card,
-  CardMedia,
-  Typography,
-  CardActionArea,
-  IconButton,
-  CardContent,
-} from "@material-ui/core";
+import { Card, Typography } from "@material-ui/core";
+import { Box } from "@mui/system";
 
-import { FaStar } from "react-icons/fa";
-import { HiShare } from "react-icons/hi";
-import { IoMdText } from "react-icons/io";
-const CustomImg = Styled(CardMedia)`
-    height: 180px;
+const Title = Styled(Typography)`
+    color: #fff;
+    position: absolute;
+    margin-top: -50px;
+    margin-left: 10px;
 `;
+const IMG = Styled.img`
+    width: inherit;
+    height: inherit;
+    @media (max-width: 768px) {
+      width: inherit;
+      height: inherit;
+    }
+    `;
 
 const CustomBox = Styled(Card)`
+    border-radius: 12px;
     cursor:pointer;
+    width: 16vw;
+    height: 20vw;
 
     &:hover{
         color:gray;
     }
+    @media (max-width: 768px) {
+        width: 42vw;
+        height: 51vw;
+    }
 `;
 
 export const Perfil = (data) => {
-  const { tumnail, age, name } = data.props;
+  const { nombre, primerApellido, tumnail } = data.props;
   return (
-    <>
-      <CustomBox elevation={6} sx={{ maxWidth: 200 }}>
-        <CardActionArea>
-          <CustomImg component="img" image={tumnail} alt="green iguana" />
-          <CardContent>
-            <Typography gutterBottom variant="h6" component="div">
-              {name}
-            </Typography>
-            <Typography variant="body2" component="ul">
-              {age}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <IconButton aria-label="add to favorites">
-          <FaStar />
-        </IconButton>
-        <IconButton aria-label="share">
-          <HiShare />
-        </IconButton>
-        <IconButton aria-label="share">
-          <IoMdText />
-        </IconButton>
+    <Box>
+      <CustomBox elevation={6}>
+        <IMG src={tumnail} />
+        <Title variant="h6">{`${nombre} ${primerApellido}`}</Title>
       </CustomBox>
-    </>
+    </Box>
   );
 };
 

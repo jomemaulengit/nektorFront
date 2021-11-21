@@ -1,103 +1,49 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import ProfileGrid from "./components/MicroPerfil/ProfileGrid";
-import { getTags } from "./redux/tagState";
-
-
-const ProfileList = [
-  {
-    tumnail: "/img/asd.jpg",
-    age: "34",
-    name: "Tom Cruise",
-    tag_a:"blanco",
-    tag_b:"caucasico",
-    tag_c:"hombre",
-    tag_d:"cine",
-  },
-  {
-    tumnail: "/img/asd.jpg",
-    age: "34",
-    name: "Tom Cruise",
-    tag_a:"blanco",
-    tag_b:"caucasico",
-    tag_c:"hombre",
-    tag_d:"cine",
-  },
-  {
-    tumnail: "/img/KR.jpg",
-    age: "45",
-    name: "Keanu reeves",
-    tag_a:"blanco",
-    tag_b:"hombre",
-    tag_c:"ojos cafes",
-    tag_d:"alto",
-  },
-  {
-    tumnail: "/img/KR.jpg",
-    age: "45",
-    name: "Keanu reeves",
-    tag_a:"blanco",
-    tag_b:"hombre",
-    tag_c:"ojos cafes",
-    tag_d:"alto",
-  },
-  {
-    tumnail: "/img/CHTH.jpg",
-    age: "35",
-    name: "charlize theron",
-    tag_a:"mujer",
-    tag_b:"rubio",
-    tag_c:"caucasico",
-    tag_d:"cine",
-  },
-  {
-    tumnail: "/img/CHTH.jpg",
-    age: "35",
-    name: "charlize theron",
-    tag_a:"mujer",
-    tag_b:"rubio",
-    tag_c:"caucasico",
-    tag_d:"cine",
-  },
-  {
-    tumnail: "/img/CLCL.jpg",
-    age: "200",
-    name: "Calculon",
-    tag_a:"alto",
-  },
-  {
-    tumnail: "/img/CLCL.jpg",
-    age: "200",
-    name: "Calculon",
-    tag_a:"alto",
-  },
-  {
-    tumnail: "/img/LSGN.jpg",
-    age: "54",
-    name: "Luis Gnecco",
-    tag_a:"hombre",
-    tag_b:"calvo",
-    tag_c:"bajo",
-    tag_d:"blanco",
-  },
-  {
-    tumnail: "/img/LSGN.jpg",
-    age: "54",
-    name: "Luis Gnecco",
-    tag_a:"hombre",
-    tag_b:"calvo",
-    tag_c:"bajo",
-    tag_d:"blanco",
-  },
-];
+import { OpenFilter } from "./components/Tagfilter/OpenFilter";
+import { getPicAndName, getTags } from "./redux/tagState";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { UserProfile } from "./components/PerfilDeActor/UserProfile";
+import { UseGet } from "./hooks/useGet";
+import { CircularProgress } from "@material-ui/core";
+import { CreateUser } from "./components/CreateUserForm/CreateUser";
+import { EditUserProfile } from "./components/PerfilDeActor/EditProfile";
+import { LoginForm } from "./components/LoginForm/LoginForm";
+import { NavBar } from "./components/NavBar/NavBar";
 
 function App() {
   const dispatch = useDispatch();
   dispatch(getTags());
+  dispatch(getPicAndName());
+
+  const { data, loading } = UseGet();
+
   return (
     <>
-      <br />
-      <ProfileGrid data={ProfileList} />
+      <Router>
+        <NavBar />
+        <Switch>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            data.map((item, index) => (
+              <Route exact path={`/perfil/${item.id}`} key={index}>
+                <EditUserProfile data={item.id} />
+              </Route>
+            ))
+          )}
+          <Route exact path="/">
+            <br/>
+            <OpenFilter data={data} />
+          </Route>
+          <Route exact path="/createuser">
+            <CreateUser />
+          </Route>
+          <Route exact path="/login">
+            <LoginForm />
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }
