@@ -3,14 +3,10 @@ import {
   Button,
   Card,
   CardContent,
-  Link,
   Typography,
-  Collapse,
   TextField,
   Grid,
 } from "@material-ui/core";
-import { Facebook, Instagram, Twitter } from "@mui/icons-material";
-import { Alert, Stack } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 
@@ -50,10 +46,6 @@ export const EditSideBar = (data) => {
   const nombre = data.data.nombre;
   const primerApellido = data.data.primerApellido;
   const edad = data.data.edad;
-  const genero = data.data.genero;
-  const altura = data.data.altura;
-  const ciudad = data.data.ciudad;
-  const redes = data.data.redes;
 
   return (
     <SDiv>

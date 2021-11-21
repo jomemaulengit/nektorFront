@@ -15,7 +15,13 @@ import {
 import { useScrollTrigger, Zoom } from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
-import { KeyboardArrowUp } from "@mui/icons-material";
+import {
+  Home,
+  HomeMax,
+  HomeMaxRounded,
+  KeyboardArrowUp,
+  Login,
+} from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { Divide as Hamburger } from "hamburger-react";
@@ -82,8 +88,9 @@ ScrollTop.propTypes = {
 
 const TemporaryDrawer = () => {
   const [state, setState] = React.useState({
-    left: false,
+    right: false,
   });
+  const [isOpen, setOpen] = React.useState(false);
 
   const toggleDrawer = (side, open) => (event) => {
     if (
@@ -92,6 +99,7 @@ const TemporaryDrawer = () => {
     ) {
       return;
     }
+    setOpen(!isOpen);
 
     setState({ ...state, [side]: open });
   };
@@ -100,38 +108,60 @@ const TemporaryDrawer = () => {
     <Box
       sx={{ width: side === "top" || side === "bottom" ? "auto" : 250 }}
       role="presentation"
-      onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <KeyboardArrowUp /> : <KeyboardArrowUp />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <KeyboardArrowUp /> : <KeyboardArrowUp />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem
+          onClick={toggleDrawer(side, false)}
+          button
+          component={Link}
+          to="/"
+        >
+          <ListItemIcon>
+            <Home />
+            <Typography variant="h6">Home</Typography>
+          </ListItemIcon>
+        </ListItem>
+        <Divider />
+
+        <ListItem onClick={toggleDrawer(side, false)}>
+          <ListItemIcon>
+            <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              to="/login"
+            >
+              Iniciar sesion
+            </Button>
+          </ListItemIcon>
+        </ListItem>
+        <Divider />
+        <ListItem onClick={toggleDrawer(side, false)}>
+          <ListItemIcon>
+            <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              to="/createuser"
+            >
+              Registrarse
+            </Button>
+          </ListItemIcon>
+        </ListItem>
       </List>
     </Box>
   );
 
   return (
     <div>
-      {["left"].map((anchor) => (
+      {["right"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          <Hamburger
+            toggled={isOpen}
+            toggle={setOpen}
+            onToggle={toggleDrawer(anchor, true)}
+          />
           <Drawer
             anchor={anchor}
             open={state[anchor]}
@@ -151,7 +181,6 @@ export const NavBar = (props) => {
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
-            <Hamburger />
             <TemporaryDrawer />
             <Link to="/" style={{ textDecoration: "none", color: "white" }}>
               <Typography variant="h6">NEKTOR</Typography>

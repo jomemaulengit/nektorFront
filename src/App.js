@@ -10,6 +10,7 @@ import { CreateUser } from "./components/CreateUserForm/CreateUser";
 import { EditUserProfile } from "./components/PerfilDeActor/EditProfile";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 import { NavBar } from "./components/NavBar/NavBar";
+import { Loading } from "./components/base/Loading";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ function App() {
         <NavBar />
         <Switch>
           {loading ? (
-            <CircularProgress />
+            <Loading />
           ) : (
             data.map((item, index) => (
               <Route exact path={`/perfil/${item.id}`} key={index}>
@@ -33,7 +34,7 @@ function App() {
             ))
           )}
           <Route exact path="/">
-            <br/>
+            <br />
             <OpenFilter data={data} />
           </Route>
           <Route exact path="/createuser">

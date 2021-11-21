@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { CircularProgress, Grid } from "@material-ui/core";
 import { UseGetProfile } from "../../hooks/UseGetProfile";
-import { SideBar } from "./SideBar";
-import { Content } from "./Content";
 import { EditSideBar } from "./EditSideBar";
 import { EditContent } from "./EditContent";
 

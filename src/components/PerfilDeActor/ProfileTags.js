@@ -1,38 +1,15 @@
 import {
   Button,
-  Card,
   CardContent,
-  Modal,
   Typography,
   TextField,
   Grid,
-  InputLabel,
-  Slider,
   Box,
 } from "@material-ui/core";
 import { SpeedDialIcon } from "@material-ui/lab";
-import { Tooltip } from "@mui/material";
 import React, { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import { updateTags } from "../../redux/tagState";
-import ProfileGrid from "../MicroPerfil/ProfileGrid";
+import { useSelector } from "react-redux";
 import { DTag } from "../Tagfilter/DTag";
-
-const CustomModal = styled(Card)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-  background-color: whitesmoke;
-  box-shadow: 24;
-
-  @media (max-width: 600px) {
-    width: 100vw;
-    left: 50%;
-  }
-`;
 
 export const ProfileTags = () => {
   const tags = useSelector((state) => state.tags.array);

@@ -4,16 +4,13 @@ import {
   ImageList,
   ImageListItem,
   Button,
-  Typography,
   TextField,
   Grid,
   Switch,
   ButtonBase,
-  Avatar,
 } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import { Delete } from "@mui/icons-material";
-import { SpeedDialIcon } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import ReactPlayer from "react-player/lazy";
@@ -38,8 +35,6 @@ const CCard = styled(Card)`
 export const EditContent = (data) => {
   const fotos = data.data.fotos;
   const reel = data.data.reel;
-  const correo = data.data.correo;
-  const telefono = data.data.telefono;
   const [value, setValue] = useState("1");
   const l = fotos.length;
 
