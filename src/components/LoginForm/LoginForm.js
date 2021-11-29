@@ -16,30 +16,17 @@ import {
   emailValidator,
   passwordValidator,
 } from "../../helper/createUserValidator";
-import { PostCreateUser } from "../../helper/postCreateUser";
 import { Link } from "react-router-dom";
 import { Visibility } from "@mui/icons-material";
+import { PostLogin } from "../../helper/postLogin";
 
 export const LoginForm = () => {
   const handleSubmit = (e) => {
     const profile = e.target;
     e.preventDefault();
-    PostCreateUser({
-      nombre: profile[0].value,
-      primerApellido: profile[2].value,
-      segundoApellido: profile[4].value,
-      edad: profile[6].value,
-      genero: "indefinido",
-      altura: "indefinido",
-      ciudad: profile[8].value,
-      tumnail: "indefinido",
-      reel: "indefinido",
-      fotos: [],
-      redes: [],
-      telefono: profile[10].value,
-      correo: profile[12].value,
-      tags: [],
-      password: profile[14].value,
+    PostLogin({
+      correo: profile[0].value,
+      password: profile[2].value,
     });
   };
   const [warning, setwarning] = useState([false, false]);
@@ -66,17 +53,6 @@ export const LoginForm = () => {
             alt="logo"
             style={{ width: "300px", height: "220px" }}
           />
-          {/* <Typography
-            style={{
-              marginLeft: "35px",
-              fontVariantCaps: "all-small-caps",
-              color: "#3f51f5",
-            }}
-            variant="h4"
-            component="p"
-          >
-            Iniciar sesion
-          </Typography> */}
           <form
             noValidate
             onSubmit={(e) => {
