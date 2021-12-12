@@ -19,18 +19,23 @@ import {
 import { Link } from "react-router-dom";
 import { Visibility } from "@mui/icons-material";
 import { PostLogin } from "../../helper/postLogin";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateActiveProfile } from "../../redux/tagState";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export const LoginForm = () => {
+  const token = useSelector((state) => state.tags.activeProfile.token);
   const [profile, setprofile] = useState([]);
   const [warning, setwarning] = useState([false, false]);
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
-    dispatch(updateActiveProfile(profile));
-  }, [profile,dispatch]);
+    if (token) {
+      history.push("/");
+    } else {
+      dispatch(updateActiveProfile(profile));
+    }
+  }, [profile, dispatch]);
 
   const onInput = (i, limit) => {
     i.target.value = i.target.value.toString().slice(0, limit);
