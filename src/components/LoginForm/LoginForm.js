@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -19,17 +19,18 @@ import {
 import { Link } from "react-router-dom";
 import { Visibility } from "@mui/icons-material";
 import { PostLogin } from "../../helper/postLogin";
+import { useDispatch } from "react-redux";
+import { updateActiveProfile } from "../../redux/tagState";
 
 export const LoginForm = () => {
-  const handleSubmit = (e) => {
-    const profile = e.target;
-    e.preventDefault();
-    PostLogin({
-      correo: profile[0].value,
-      password: profile[2].value,
-    });
-  };
+  const [profile, setprofile] = useState([]);
   const [warning, setwarning] = useState([false, false]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(profile);
+    dispatch(updateActiveProfile(profile));
+  }, [profile]);
+
   const onInput = (i, limit) => {
     i.target.value = i.target.value.toString().slice(0, limit);
     let email = emailValidator(i.target.value);
@@ -55,9 +56,15 @@ export const LoginForm = () => {
           />
           <form
             noValidate
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               if (warning.every((v) => v === true)) {
-                handleSubmit(e);
+                e.preventDefault();
+                setprofile(
+                  await PostLogin({
+                    correo: e.target[0].value,
+                    password: e.target[2].value,
+                  })
+                );
               } else {
                 e.preventDefault();
                 alert("Por favor, llene todos los campos correctamente");

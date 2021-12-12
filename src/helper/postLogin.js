@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const PostLogin = (data) => {
-  axios({
+export const PostLogin = async (data) => {
+  const postResponse = await axios({
     method: "post",
     url: "http://localhost:8080/api/user/login",
     headers: {},
@@ -10,9 +10,11 @@ export const PostLogin = (data) => {
     },
   })
     .then((res) => {
-      console.log(res.data.data);
+      const retrieve = [res.data.data.profile, res.data.data.token];
+      return retrieve;
     })
     .catch((error) => {
       console.log(error);
     });
+  return postResponse;
 };

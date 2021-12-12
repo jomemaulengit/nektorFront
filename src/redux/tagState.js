@@ -4,12 +4,14 @@ import axios from "axios";
 const initialState = {
   array: [],
   picAndName: [],
+  activeProfile: [],
 };
 
 //types
 const GET_TAGS = "GET_TAGS";
 const UPDATE_TAGS = "UPDATE_TAGS";
 const GET_PIC_AND_NAME = "GET_PIC_AND_NAME";
+const GET_ACTIVE_PROFILE = "GET_ACTIVE_PROFILE";
 
 //reducer
 export default function tagReducer(state = initialState, action) {
@@ -28,6 +30,11 @@ export default function tagReducer(state = initialState, action) {
       return {
         ...state,
         picAndName: action.payload,
+      };
+    case GET_ACTIVE_PROFILE:
+      return {
+        ...state,
+        activeProfile: action.payload,
       };
     default:
       return state;
@@ -56,6 +63,28 @@ export const updateTags = (tags) => (dispatch, getState) => {
     payload: tags.map((item) => ({
       tag: item.tag,
       color: item.color,
+    })),
+  });
+};
+
+export const updateActiveProfile = (profile) => (dispatch, getState) => {
+  dispatch({
+    type: GET_ACTIVE_PROFILE,
+    payload: profile.map((item) => ({
+      nombre: item.nombre,
+      primerApellido: item.primerApellido,
+      segundoApellido: item.segundoApellido,
+      edad: item.edad,
+      genero: item.genero,
+      altura: item.altura,
+      ciudad: item.ciudad,
+      tumnail: item.tumnail,
+      reel: item.reel,
+      fotos: item.fotos,
+      redes: item.redes,
+      telefono: item.telefono,
+      correo: item.correo,
+      tags: item.tags,
     })),
   });
 };
