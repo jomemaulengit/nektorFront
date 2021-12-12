@@ -19,7 +19,7 @@ import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { Divide as Hamburger } from "hamburger-react";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const HideOnScroll = (props) => {
   const { children, window } = props;

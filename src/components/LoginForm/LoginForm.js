@@ -30,7 +30,7 @@ export const LoginForm = () => {
   const history = useHistory();
   useEffect(() => {
     dispatch(updateActiveProfile(profile));
-  }, [profile]);
+  }, [profile,dispatch]);
 
   const onInput = (i, limit) => {
     i.target.value = i.target.value.toString().slice(0, limit);
