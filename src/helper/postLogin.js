@@ -10,7 +10,10 @@ export const PostLogin = async (data) => {
     },
   })
     .then((res) => {
-      const retrieve = [res.data.data.profile, res.data.data.token];
+      const retrieve = {
+        profile: res.data.data.profile,
+        token: res.data.data.token,
+      };
       return retrieve;
     })
     .catch((error) => {

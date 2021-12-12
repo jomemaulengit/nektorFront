@@ -70,22 +70,7 @@ export const updateTags = (tags) => (dispatch, getState) => {
 export const updateActiveProfile = (profile) => (dispatch, getState) => {
   dispatch({
     type: GET_ACTIVE_PROFILE,
-    payload: profile.map((item) => ({
-      nombre: item.nombre,
-      primerApellido: item.primerApellido,
-      segundoApellido: item.segundoApellido,
-      edad: item.edad,
-      genero: item.genero,
-      altura: item.altura,
-      ciudad: item.ciudad,
-      tumnail: item.tumnail,
-      reel: item.reel,
-      fotos: item.fotos,
-      redes: item.redes,
-      telefono: item.telefono,
-      correo: item.correo,
-      tags: item.tags,
-    })),
+    payload: profile,
   });
 };
 

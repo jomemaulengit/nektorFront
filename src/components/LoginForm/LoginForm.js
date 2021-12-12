@@ -21,13 +21,14 @@ import { Visibility } from "@mui/icons-material";
 import { PostLogin } from "../../helper/postLogin";
 import { useDispatch } from "react-redux";
 import { updateActiveProfile } from "../../redux/tagState";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export const LoginForm = () => {
   const [profile, setprofile] = useState([]);
   const [warning, setwarning] = useState([false, false]);
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
-    console.log(profile);
     dispatch(updateActiveProfile(profile));
   }, [profile]);
 
@@ -65,6 +66,7 @@ export const LoginForm = () => {
                     password: e.target[2].value,
                   })
                 );
+                history.push("/");
               } else {
                 e.preventDefault();
                 alert("Por favor, llene todos los campos correctamente");

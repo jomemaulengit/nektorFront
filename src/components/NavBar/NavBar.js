@@ -8,23 +8,18 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
   Divider,
   Button,
 } from "@material-ui/core";
 import { useScrollTrigger, Zoom } from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Home,
-  HomeMax,
-  HomeMaxRounded,
-  KeyboardArrowUp,
-  Login,
-} from "@mui/icons-material";
+import { Home, KeyboardArrowUp } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { Divide as Hamburger } from "hamburger-react";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const HideOnScroll = (props) => {
   const { children, window } = props;
@@ -176,6 +171,7 @@ const TemporaryDrawer = () => {
 };
 
 export const NavBar = (props) => {
+  const token = useSelector((state) => state.tags.activeProfile.token);
   return (
     <React.Fragment>
       <HideOnScroll {...props}>
@@ -190,11 +186,19 @@ export const NavBar = (props) => {
               to="/login"
               style={{ textDecoration: "none", color: "white" }}
             >
-              <Fab variant="extended" size="small" color="secondary">
-                <Typography variant="h6" style={{ margin: "20px" }}>
-                  LOGIN
-                </Typography>
-              </Fab>
+              {token ? (
+                <Fab variant="extended" size="small" color="secondary">
+                  <Typography variant="h6" style={{ margin: "20px" }}>
+                    LOGOUT
+                  </Typography>
+                </Fab>
+              ) : (
+                <Fab variant="extended" size="small" color="secondary">
+                  <Typography variant="h6" style={{ margin: "20px" }}>
+                    LOGIN
+                  </Typography>
+                </Fab>
+              )}
             </Link>
           </Toolbar>
         </AppBar>
