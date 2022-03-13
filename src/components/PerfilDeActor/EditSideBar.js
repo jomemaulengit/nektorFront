@@ -42,10 +42,10 @@ const SAvatar = styled(Avatar)`
 `;
 
 export const EditSideBar = (data) => {
-  const tumnail = data.data.tumnail;
-  const nombre = data.data.nombre;
-  const primerApellido = data.data.primerApellido;
-  const edad = data.data.edad;
+  const tumnail = data.data.prop.tumnail;
+  const nombre = data.data.prop.nombre;
+  const primerApellido = data.data.prop.primerApellido;
+  const edad = data.data.prop.edad;
 
   return (
     <SDiv>

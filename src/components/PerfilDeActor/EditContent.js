@@ -33,10 +33,10 @@ const CCard = styled(Card)`
 `;
 
 export const EditContent = (data) => {
-  const fotos = data.data.fotos;
-  const reel = data.data.reel;
+  const fotos = data.data.prop.fotos;
+  const reel = data.data.prop.reel;
   const [value, setValue] = useState("1");
-  const l = fotos.length;
+  const l = fotos ? fotos.length : 0;
 
   return (
     <>
@@ -53,37 +53,41 @@ export const EditContent = (data) => {
           <TabPanel value="1">
             <ImageList variant="quilted">
               <Box style={{ width: "30vw", height: "400px" }}>
-                {fotos
-                  .map((foto, i) => {
-                    return (
-                      <ImageListItem key={i}>
-                        <Button
-                          variant="contained"
-                          style={{
-                            position: "absolute",
-                            zIndex: "5",
-                            backgroundColor: "rgba(25,4,30,0.4)",
-                          }}
-                        >
-                          <Delete
+                {fotos ? (
+                  fotos
+                    .map((foto, i) => {
+                      return (
+                        <ImageListItem key={i}>
+                          <Button
+                            variant="contained"
                             style={{
-                              width: "40px",
-                              height: "40px",
-                              cursor: "pointer",
-                              color: "white",
+                              position: "absolute",
+                              zIndex: "5",
+                              backgroundColor: "rgba(25,4,30,0.4)",
                             }}
+                          >
+                            <Delete
+                              style={{
+                                width: "40px",
+                                height: "40px",
+                                cursor: "pointer",
+                                color: "white",
+                              }}
+                            />
+                          </Button>
+                          <img
+                            style={{ width: "100%" }}
+                            src={foto}
+                            alt="foto"
+                            loading="lazy"
                           />
-                        </Button>
-                        <img
-                          style={{ width: "100%" }}
-                          src={foto}
-                          alt="foto"
-                          loading="lazy"
-                        />
-                      </ImageListItem>
-                    );
-                  })
-                  .slice(0, Math.trunc(l / 2))}
+                        </ImageListItem>
+                      );
+                    })
+                    .slice(0, Math.trunc(l / 2))
+                ) : (
+                  <></>
+                )}
                 <ButtonBase
                   style={{
                     width: "30vw",
@@ -99,38 +103,42 @@ export const EditContent = (data) => {
                 </ButtonBase>
               </Box>
               <Box style={{ width: "30vw", height: "400px" }}>
-                {fotos
-                  .map((foto, i) => {
-                    return (
-                      <ImageListItem key={i}>
-                        <Button
-                          variant="contained"
-                          style={{
-                            position: "absolute",
-                            zIndex: "5",
-                            backgroundColor: "rgba(25,4,30,0.4)",
-                          }}
-                        >
-                          <Delete
+                {fotos ? (
+                  fotos
+                    .map((foto, i) => {
+                      return (
+                        <ImageListItem key={i}>
+                          <Button
+                            variant="contained"
                             style={{
-                              width: "40px",
-                              height: "40px",
-                              cursor: "pointer",
-                              color: "white",
+                              position: "absolute",
+                              zIndex: "5",
+                              backgroundColor: "rgba(25,4,30,0.4)",
                             }}
-                          />
-                        </Button>
+                          >
+                            <Delete
+                              style={{
+                                width: "40px",
+                                height: "40px",
+                                cursor: "pointer",
+                                color: "white",
+                              }}
+                            />
+                          </Button>
 
-                        <img
-                          style={{ width: "100%" }}
-                          src={foto}
-                          alt="foto"
-                          loading="lazy"
-                        />
-                      </ImageListItem>
-                    );
-                  })
-                  .slice(Math.trunc(l / 2), l)}
+                          <img
+                            style={{ width: "100%" }}
+                            src={foto}
+                            alt="foto"
+                            loading="lazy"
+                          />
+                        </ImageListItem>
+                      );
+                    })
+                    .slice(Math.trunc(l / 2), l)
+                ) : (
+                  <></>
+                )}
               </Box>
             </ImageList>
             <br />

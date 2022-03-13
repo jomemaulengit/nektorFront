@@ -18,6 +18,9 @@ import { Home, KeyboardArrowUp } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 import { Divide as Hamburger } from "hamburger-react";
+import { MainAvatar } from "./MainAvatar";
+import { useSelector } from "react-redux";
+// import { useEffect } from "react";
 
 const HideOnScroll = (props) => {
   const { children, window } = props;
@@ -123,9 +126,9 @@ const TemporaryDrawer = () => {
               variant="contained"
               color="primary"
               component={Link}
-              to="/login"
+              to="/editprofile"
             >
-              Iniciar sesion
+              Mi Perfil
             </Button>
           </ListItemIcon>
         </ListItem>
@@ -134,11 +137,11 @@ const TemporaryDrawer = () => {
           <ListItemIcon>
             <Button
               variant="contained"
-              color="primary"
+              color="default"
               component={Link}
-              to="/createuser"
+              to="/logout"
             >
-              Registrarse
+              Cerrar Sesion
             </Button>
           </ListItemIcon>
         </ListItem>
@@ -168,7 +171,8 @@ const TemporaryDrawer = () => {
   );
 };
 
-export const NavBar = (props) => {
+export const LogedInNavBar = (props) => {
+  const user = useSelector((state) => state.tags.activeProfile.profile);
   return (
     <React.Fragment>
       <HideOnScroll {...props}>
@@ -180,14 +184,10 @@ export const NavBar = (props) => {
             </Link>
             <span style={{ flexGrow: 1 }} />
             <Link
-              to="/login"
+              to="/editprofile"
               style={{ textDecoration: "none", color: "white" }}
             >
-              <Fab variant="extended" size="small" color="secondary">
-                <Typography variant="h6" style={{ margin: "20px" }}>
-                  LOGIN
-                </Typography>
-              </Fab>
+              <MainAvatar prop={user} />
             </Link>
           </Toolbar>
         </AppBar>

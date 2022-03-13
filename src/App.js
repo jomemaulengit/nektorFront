@@ -1,16 +1,18 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { OpenFilter } from "./components/Tagfilter/OpenFilter";
 import { getPicAndName, getTags } from "./redux/tagState";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserProfile } from "./components/PerfilDeActor/UserProfile";
 import { UseGet } from "./hooks/useGet";
 import { CreateUser } from "./components/CreateUserForm/CreateUser";
-// import { EditUserProfile } from "./components/PerfilDeActor/EditProfile";
+import { EditUserProfile } from "./components/PerfilDeActor/EditProfile";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 import { NavBar } from "./components/NavBar/NavBar";
 import { Loading } from "./components/base/Loading";
-// import { UseGetPics } from "./hooks/UseGetPics";
+import { LogedInNavBar } from "./components/NavBar/logedInNavBar";
+import { LogOutForm } from "./components/LoginForm/LogOutForm";
+import { UseGetPics } from "./hooks/UseGetPics";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,13 +20,13 @@ function App() {
   dispatch(getPicAndName());
 
   const { data, loading } = UseGet();
-  // const {data:pics,loading:loading2} = UseGetPics();
-  // console.log(pics);
+  const { profile, token } = useSelector((state) => state.tags.activeProfile);
+  const {data:pics,loading:loading2} = UseGetPics();
 
   return (
     <>
       <Router>
-        <NavBar />
+        {token ? <LogedInNavBar /> : <NavBar />}
         <Switch>
           {loading ? (
             <Loading />
@@ -45,6 +47,14 @@ function App() {
           <Route exact path="/login">
             <LoginForm />
           </Route>
+          <Route exact path="/logout">
+            <LogOutForm />
+          </Route>
+          {token ? (
+            <Route exact path="/editprofile">
+              {profile ? <EditUserProfile prop={profile} /> : <> </>}
+            </Route>
+          ) : null}
         </Switch>
       </Router>
     </>
